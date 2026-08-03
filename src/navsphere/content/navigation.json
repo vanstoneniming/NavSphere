@@ -234,6 +234,14 @@
           "description": "微信搜一搜【智教云栈】，获取最新的教师开源工具评测与资源下载。",
           "icon": "https://www.zhijiaoyunzhan.com/favicon.ico",
           "enabled": true
+        },
+        {
+          "id": "item-1785757549919",
+          "enabled": true,
+          "title": "开源高中数学题库系统 —— MathBank 题库工作台",
+          "href": "https://github.com/JudgePeach/math-question-bank",
+          "description": "本地化高中数学题库管理系统，支持 LaTeX 实时渲染、智能大模型 AI 解析与 OCR 公式识别。 - JudgePeach/math-question-bank",
+          "icon": "/assets/favicon_1785757541673.png"
         }
       ],
       "subCategories": []
