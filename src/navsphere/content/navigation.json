@@ -56,6 +56,14 @@
           "description": "国内领先的中小学教学资源门户，提供试卷、课件、教案及备课精品资源。",
           "icon": "https://www.zxxk.com/favicon.ico",
           "enabled": true
+        },
+        {
+          "id": "item-1785755166647",
+          "enabled": true,
+          "title": "高等数学题库-考研数学组卷-Kmath科数网-专业的数学网站-上海荃路软件开发工作室",
+          "href": "https://kmath.cn/math/ti_list.aspx",
+          "description": "访问 kmath.cn",
+          "icon": "/assets/favicon_1785755155206.png"
         }
       ],
       "subCategories": []
