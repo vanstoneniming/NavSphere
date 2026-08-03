@@ -106,6 +106,14 @@
           "description": "免费的几何、代数、表格、图形、统计和微积分动态数学软件。",
           "icon": "https://www.geogebra.org/favicon.ico",
           "enabled": true
+        },
+        {
+          "id": "item-1785745055118",
+          "enabled": true,
+          "title": "资源中心 | 网络画板",
+          "href": "https://www.netpad.net.cn/resource_web/#/",
+          "description": "",
+          "icon": "/assets/favicon_1785745047482.png"
         }
       ],
       "subCategories": []
