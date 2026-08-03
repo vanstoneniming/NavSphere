@@ -1,138 +1,100 @@
-{
-  "categories":[
-    {
-      "name": "📊 教务与管理",
-      "slug": "jiaowu",
-      "description": "排课表、成绩统计、选课系统与学生行为积分等教务辅助工具",
-      "navigationItems": [
-        {
-          "title": "梯盒智能教务系统",
-          "url": "https://tihe.cc",
-          "description": "涵盖智能排课表、学生选课、成绩统计分析及学生行为积分记录的全套教务助手。",
-          "icon": "https://tihe.cc/favicon.ico",
-          "tags": [
-            "排课",
-            "成绩统计",
-            "选课",
-            "教务"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "✏️ 备课与出题",
-      "slug": "beike",
-      "description": "试题题库、教案生成、解题策略与教学白板工具",
-      "navigationItems": [
-        {
-          "title": "解题策",
-          "url": "https://sjep.net/",
-          "description": "集题库、资源、电子白板、几何画板及各类教学常用工具（PDF/LaTeX/英语）于一体的解题平台。",
-          "icon": "https://sjep.net/favicon.ico",
-          "tags": [
-            "题库",
-            "白板",
-            "LaTeX",
-            "备课"
-          ]
-        },
-        {
-          "title": "题库与课件速查",
-          "url": "https://ti.video",
-          "description": "中学多学科试题、试卷及教案资源快速检索与下载平台。",
-          "icon": "https://ti.video/favicon.ico",
-          "tags": [
-            "试题",
-            "试卷",
-            "教案"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "🔬 理科与互动",
-      "slug": "likedaohang",
-      "description": "理科仿真演示、几何互动学习与动态数学教学软件",
-      "navigationItems": [
-        {
-          "title": "PhET 理科虚拟演示",
-          "url": "https://phet.colorado.edu/",
-          "description": "科罗拉多大学开发的免费互动式数学和科学（物理/化学/生物）物理仿真实验平台。",
-          "icon": "https://phet.colorado.edu/favicon.ico",
-          "tags": [
-            "物理仿真",
-            "科学实验",
-            "互动教学"
-          ]
-        },
-        {
-          "title": "大角几何",
-          "url": "https://dajiaoai.com/s/ESPYJ7LZ",
-          "description": "智能几何画板与AI辅助几何教学互动工具。",
-          "icon": "https://dajiaoai.com/favicon.ico",
-          "tags": [
-            "几何画板",
-            "数学教学",
-            "AI辅助"
-          ]
-        },
-        {
-          "title": "解析几何互动学习",
-          "url": "https://www.hzdianyu.cn/problems/lesson/7c8c9589-43e5-4663-b3f5-f3c679483577",
-          "description": "可视化解析几何课程与互动练习平台。",
-          "icon": "https://www.hzdianyu.cn/favicon.ico",
-          "tags": [
-            "解析几何",
-            "互动课件",
-            "数学"
-          ]
-        },
-        {
-          "title": "教学视频库",
-          "url": "https://ke.video",
-          "description": "理科教学示范课与互动教学视频资源汇聚平台。",
-          "icon": "https://ke.video/favicon.ico",
-          "tags": [
-            "教学视频",
-            "公开课"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "🛠️ 教师效率工具",
-      "slug": "xiaolu",
-      "description": "视频解析下载、文档转换与日常办公增效工具",
-      "navigationItems": [
-        {
-          "title": "视频下载解析工具",
-          "url": "https://www.datatool.vip/",
-          "description": "多平台教学视频与素材快捷解析下载工具。",
-          "icon": "https://www.datatool.vip/favicon.ico",
-          "tags": [
-            "视频解析",
-            "素材下载",
-            "效率"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "📚 推荐公众号与开源项目",
-      "slug": "tuijian",
-      "description": "优质教师公众号推荐、开源教育软件与技术分享",
-      "navigationItems": [
-        {
-          "title": "智教云栈公众号",
-          "url": "https://www.zhijiaoyunzhan.com",
-          "description": "微信搜一搜【智教云栈】，获取最新的教师开源工具评测与资源下载。",
-          "icon": "https://www.zhijiaoyunzhan.com/favicon.ico",
-          "tags": [
-            "公众号",
-            "教学资源"
-          ]
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "name": "📊 教务与管理",
+    "slug": "jiaowu",
+    "description": "排课表、成绩统计、选课系统与学生行为积分等教务辅助工具",
+    "navigationItems": [
+      {
+        "title": "梯盒智能教务系统",
+        "url": "https://tihe.cc",
+        "description": "涵盖智能排课表、学生选课、成绩统计分析及学生行为积分记录的全套教务助手。",
+        "icon": "https://tihe.cc/favicon.ico",
+        "tags": ["排课", "成绩统计", "选课", "教务"]
+      }
+    ]
+  },
+  {
+    "name": "✏️ 备课与出题",
+    "slug": "beike",
+    "description": "试题题库、教案生成、解题策略与教学白板工具",
+    "navigationItems": [
+      {
+        "title": "解题策",
+        "url": "https://sjep.net/",
+        "description": "集题库、资源、电子白板、几何画板及各类教学常用工具（PDF/LaTeX/英语）于一体的解题平台。",
+        "icon": "https://sjep.net/favicon.ico",
+        "tags": ["题库", "白板", "LaTeX", "备课"]
+      },
+      {
+        "title": "题库与课件速查",
+        "url": "https://ti.video",
+        "description": "中学多学科试题、试卷及教案资源快速检索与下载平台。",
+        "icon": "https://ti.video/favicon.ico",
+        "tags": ["试题", "试卷", "教案"]
+      }
+    ]
+  },
+  {
+    "name": "🔬 理科与互动",
+    "slug": "likedaohang",
+    "description": "理科仿真演示、几何互动学习与动态数学教学软件",
+    "navigationItems": [
+      {
+        "title": "PhET 理科虚拟演示",
+        "url": "https://phet.colorado.edu/",
+        "description": "科罗拉多大学开发的免费互动式数学和科学（物理/化学/生物）物理仿真实验平台。",
+        "icon": "https://phet.colorado.edu/favicon.ico",
+        "tags": ["物理仿真", "科学实验", "互动教学"]
+      },
+      {
+        "title": "大角几何",
+        "url": "https://dajiaoai.com/s/ESPYJ7LZ",
+        "description": "智能几何画板与AI辅助几何教学互动工具。",
+        "icon": "https://dajiaoai.com/favicon.ico",
+        "tags": ["几何画板", "数学教学", "AI辅助"]
+      },
+      {
+        "title": "解析几何互动学习",
+        "url": "https://www.hzdianyu.cn/problems/lesson/7c8c9589-43e5-4663-b3f5-f3c679483577",
+        "description": "可视化解析几何课程与互动练习平台。",
+        "icon": "https://www.hzdianyu.cn/favicon.ico",
+        "tags": ["解析几何", "互动课件", "数学"]
+      },
+      {
+        "title": "教学视频库",
+        "url": "https://ke.video",
+        "description": "理科教学示范课与互动教学视频资源汇聚平台。",
+        "icon": "https://ke.video/favicon.ico",
+        "tags": ["教学视频", "公开课"]
+      }
+    ]
+  },
+  {
+    "name": "🛠️ 教师效率工具",
+    "slug": "xiaolu",
+    "description": "视频解析下载、文档转换与日常办公增效工具",
+    "navigationItems": [
+      {
+        "title": "视频下载解析工具",
+        "url": "https://www.datatool.vip/",
+        "description": "多平台教学视频与素材快捷解析下载工具。",
+        "icon": "https://www.datatool.vip/favicon.ico",
+        "tags": ["视频解析", "素材下载", "效率"]
+      }
+    ]
+  },
+  {
+    "name": "📚 推荐公众号与开源项目",
+    "slug": "tuijian",
+    "description": "优质教师公众号推荐、开源教育软件与技术分享",
+    "navigationItems": [
+      {
+        "title": "智教云栈公众号",
+        "url": "https://www.zhijiaoyunzhan.com",
+        "description": "微信搜一搜【智教云栈】，获取最新的教师开源工具评测与资源下载。",
+        "icon": "https://www.zhijiaoyunzhan.com/favicon.ico",
+        "tags": ["公众号", "教学资源"]
+      }
+    ]
+  }
+]
