@@ -8,17 +8,6 @@
       "enabled": true,
       "items": [
         {
-          "id": "1_1",
-          "title": "题盒 | 北京地区中学试题库",
-          "href": "https://tihe.cc",
-          "description": "北京市区级考试资源深度加工站",
-          "longDescription": "",
-          "tags": [],
-          "icon": "https://tihe.cc/favicon.ico",
-          "useDefaultIcon": true,
-          "enabled": true
-        },
-        {
           "id": "item-1786158615759",
           "enabled": true,
           "title": "极简成绩统计",
@@ -107,6 +96,17 @@
           "tags": [],
           "icon": "/assets/favicon_1785756043323.png",
           "useDefaultIcon": false,
+          "enabled": true
+        },
+        {
+          "id": "1_1",
+          "title": "题盒 | 北京地区中学试题库",
+          "href": "https://tihe.cc",
+          "description": "北京市区级考试资源深度加工站",
+          "longDescription": "",
+          "tags": [],
+          "icon": "https://tihe.cc/favicon.ico",
+          "useDefaultIcon": true,
           "enabled": true
         }
       ],
