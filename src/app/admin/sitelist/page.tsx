@@ -325,7 +325,9 @@ export default function SiteListPage() {
   const filteredSites = sites.filter(site => {
     const matchesSearch = site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       site.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      site.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      site.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      site.longDescription?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (site.tags || []).some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
 
     const matchesCategory = categoryFilter === 'all' || getSiteCategory(site.id) === categoryFilter
 
