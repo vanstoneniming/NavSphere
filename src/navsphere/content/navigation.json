@@ -25,6 +25,14 @@
           "href": "https://count.mingzi.net/",
           "description": "成绩统计，一分两率，学生成绩小条快速制作",
           "icon": "/assets/favicon_1786158576403.svg"
+        },
+        {
+          "id": "item-1786158652160",
+          "enabled": true,
+          "title": "校园选课系统",
+          "href": "https://cs.tihe.cc/",
+          "description": "为中小学打造的轻量选课平台：学校自助开通，学生短链登录，教学处一站完成发布与统计。",
+          "icon": "/assets/favicon_1786158645727.svg"
         }
       ],
       "subCategories": []
