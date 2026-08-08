@@ -285,7 +285,7 @@
           "longDescription": "![图片](/assets/img_1786159983265.png)",
           "tags": [],
           "icon": "https://www.zhijiaoyunzhan.com/favicon.ico",
-          "useDefaultIcon": false,
+          "useDefaultIcon": true,
           "enabled": true
         },
         {
