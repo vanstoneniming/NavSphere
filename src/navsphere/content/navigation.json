@@ -309,6 +309,14 @@
           "icon": "/assets/favicon_1786150856045.ico",
           "useDefaultIcon": false,
           "enabled": true
+        },
+        {
+          "id": "item-1786194412939",
+          "enabled": true,
+          "title": "aetherviz 一句话生成3D交互教学页面",
+          "href": "https://mp.weixin.qq.com/s/oL16KrXDKLpcYn4xByy4gA",
+          "description": "aetherviz",
+          "icon": "/assets/favicon_1786194393927.png"
         }
       ],
       "subCategories": []
