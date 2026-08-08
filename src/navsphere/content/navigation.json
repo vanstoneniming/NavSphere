@@ -240,6 +240,14 @@
           "description": "提供丰富的教育类图文模板、班级通知及一键抠图等实用工具。",
           "icon": "https://www.gaoding.com/favicon.ico",
           "enabled": true
+        },
+        {
+          "id": "item-1786193892730",
+          "enabled": true,
+          "title": "飞象老师",
+          "href": "https://www.feixianglaoshi.com/#/home?featureId=20",
+          "description": "飞象老师，一句话生成专业级互动课件",
+          "icon": "/assets/favicon_1786193865023.png"
         }
       ],
       "subCategories": []
