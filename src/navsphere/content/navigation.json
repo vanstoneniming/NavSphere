@@ -35,7 +35,7 @@
           "description": "集题库、资源、电子白板、几何画板及各类教学常用工具（PDF/LaTeX/英语）于一体的解题平台。",
           "longDescription": "",
           "tags": [],
-          "icon": "https://sjep.net/statics/images/icon.svg",
+          "icon": "/assets/img_1786158177539.png",
           "useDefaultIcon": false,
           "enabled": true
         },
