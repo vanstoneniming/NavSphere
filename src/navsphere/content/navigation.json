@@ -51,11 +51,14 @@
         },
         {
           "id": "item-1785755166647",
-          "enabled": true,
-          "title": "高等数学题库-考研数学组卷-Kmath科数网-专业的数学网站-上海荃路软件开发工作室",
+          "title": "Kmath科数网",
           "href": "https://kmath.cn/math/ti_list.aspx",
-          "description": "访问 kmath.cn",
-          "icon": "/assets/favicon_1785755155206.png"
+          "description": "高等数学题库-考研数学组卷-Kmath科数网-专业的数学网站-上海荃路软件开发工作室",
+          "longDescription": "",
+          "tags": [],
+          "icon": "/assets/favicon_1785755155206.png",
+          "useDefaultIcon": false,
+          "enabled": true
         },
         {
           "id": "item-1785756047344",
