@@ -242,6 +242,14 @@
           "href": "https://github.com/JudgePeach/math-question-bank",
           "description": "本地化高中数学题库管理系统，支持 LaTeX 实时渲染、智能大模型 AI 解析与 OCR 公式识别。 - JudgePeach/math-question-bank",
           "icon": "/assets/favicon_1785757541673.png"
+        },
+        {
+          "id": "item-1786150866496",
+          "enabled": true,
+          "title": "深度拆解 TeachAny：一个把 AI 变成教学设计大师的开源项目",
+          "href": "https://mp.weixin.qq.com/s/ZE6Z7rAuQ8wMyxX5uStHrA",
+          "description": "",
+          "icon": "/assets/favicon_1786150856045.ico"
         }
       ],
       "subCategories": []
