@@ -21,7 +21,7 @@
           "href": "https://www.bilibili.com/video/BV1t93W6CEh2/?spm_id_from=333.1007.tianma.1-3-3.click&vd_source=03f3d8d8e048e32c6ac66628073742f3",
           "description": "这次的旅行，我们将从雪山直达热带雨林\n",
           "icon": "/assets/icons/bilibili.svg",
-          "useDefaultIcon": false,
+          "useDefaultIcon": true,
           "enabled": true
         }
       ],
