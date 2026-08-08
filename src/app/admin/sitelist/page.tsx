@@ -530,36 +530,45 @@ export default function SiteListPage() {
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
+    input.multiple = true // 支持批量选择多张图片
     input.onchange = async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0]
-      if (!file) return
+      const files = Array.from((e.target as HTMLInputElement).files || [])
+      if (files.length === 0) return
 
       try {
         if (target === 'add') setIsUploadingAddImage(true)
         else setIsUploadingEditImage(true)
 
-        const base64 = await fileToCompressedDataUrl(file)
+        // 逐张压缩上传（串行，避免并发请求混乱），全部成功后统一插入详细介绍
+        const markdownImages: string[] = []
+        for (const file of files) {
+          const base64 = await fileToCompressedDataUrl(file)
 
-        const response = await fetch('/api/resource', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: base64 }),
-        })
-        if (!response.ok) throw new Error(`上传失败: ${response.status}`)
-        const data = await response.json()
-        if (!data.imageUrl) throw new Error('未获取到上传后的图片URL')
+          const response = await fetch('/api/resource', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: base64 }),
+          })
+          if (!response.ok) throw new Error(`上传失败: ${response.status}`)
+          const data = await response.json()
+          if (!data.imageUrl) throw new Error('未获取到上传后的图片URL')
+
+          markdownImages.push(`![图片](${data.imageUrl})`)
+        }
+
+        const insertText = markdownImages.join('\n\n')
 
         if (target === 'add') {
           const current = newSite.longDescription || ''
           const separator = current === '' || current.endsWith('\n') ? '' : '\n\n'
-          setNewSite({ ...newSite, longDescription: current + separator + `![图片](${data.imageUrl})` })
+          setNewSite({ ...newSite, longDescription: current + separator + insertText })
         } else {
           const current = editSite.longDescription || ''
           const separator = current === '' || current.endsWith('\n') ? '' : '\n\n'
-          setEditSite({ ...editSite, longDescription: current + separator + `![图片](${data.imageUrl})` })
+          setEditSite({ ...editSite, longDescription: current + separator + insertText })
         }
 
-        toast({ title: "成功", description: "图片已插入详细介绍末尾" })
+        toast({ title: "成功", description: `已上传 ${markdownImages.length} 张图片并插入详细介绍末尾` })
       } catch (error) {
         console.error('图片上传失败:', error)
         toast({ title: "错误", description: error instanceof Error ? error.message : '图片上传失败，请重试', variant: "destructive" })
@@ -1486,7 +1495,7 @@ export default function SiteListPage() {
                       {isUploadingAddImage ? "上传中..." : "上传图片"}
                     </Button>
                     <div className="text-xs text-muted-foreground">
-                      未填写时详情页显示"描述"内容；上传的图片自动插入详细介绍末尾
+                      支持一次选择多张图片；大图自动压缩后依次插入详细介绍末尾
                     </div>
                   </div>
                   </div>
@@ -1748,7 +1757,7 @@ export default function SiteListPage() {
                       {isUploadingEditImage ? "上传中..." : "上传图片"}
                     </Button>
                     <div className="text-xs text-muted-foreground">
-                      未填写时详情页显示"描述"内容；上传的图片自动插入详细介绍末尾
+                      支持一次选择多张图片；大图自动压缩后依次插入详细介绍末尾
                     </div>
                   </div>
                   </div>

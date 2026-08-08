@@ -139,44 +139,52 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
   const uploadImage = async () => {
     if (isUploadingImage) return
 
-    // 动态创建文件选择器，选择图片后上传到站内资源，再以 Markdown 图片语法插入详细介绍
+    // 动态创建文件选择器，支持批量选择多张图片，逐张压缩上传到站内资源，
+    // 再以 Markdown 图片语法依次插入详细介绍
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
+    input.multiple = true
     input.onchange = async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0]
-      if (!file) return
+      const files = Array.from((e.target as HTMLInputElement).files || [])
+      if (files.length === 0) return
 
       try {
         setIsUploadingImage(true)
 
-        const base64 = await fileToCompressedDataUrl(file)
+        const markdownImages: string[] = []
+        for (const file of files) {
+          const base64 = await fileToCompressedDataUrl(file)
 
-        const response = await fetch('/api/resource', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ image: base64 }),
-        })
+          const response = await fetch('/api/resource', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ image: base64 }),
+          })
 
-        if (!response.ok) {
-          throw new Error(`上传失败: ${response.status} ${response.statusText}`)
+          if (!response.ok) {
+            throw new Error(`上传失败: ${response.status} ${response.statusText}`)
+          }
+
+          const data = await response.json()
+          if (!data.imageUrl) {
+            throw new Error('未获取到上传后的图片URL')
+          }
+
+          markdownImages.push(`![图片](${data.imageUrl})`)
         }
 
-        const data = await response.json()
-        if (!data.imageUrl) {
-          throw new Error('未获取到上传后的图片URL')
-        }
+        const insertText = markdownImages.join('\n\n')
 
         const current = form.getValues('longDescription') || ''
-        const insertText = `![图片](${data.imageUrl})`
         const separator = current === '' || current.endsWith('\n') ? '' : '\n\n'
         form.setValue('longDescription', current + separator + insertText)
 
         toast({
           title: "成功",
-          description: "图片已插入详细介绍末尾"
+          description: `已上传 ${markdownImages.length} 张图片并插入详细介绍末尾`
         })
       } catch (error) {
         console.error('图片上传失败:', error)
@@ -467,7 +475,7 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
                 </div>
               </FormControl>
               <FormDescription>
-                未填写时，详情页将显示"网站描述"的内容。支持 # 标题、**加粗**、- 列表、[链接](url)、![图片](url)
+                未填写时，详情页将显示"网站描述"的内容。支持 # 标题、**加粗**、- 列表、[链接](url)、![图片](url)；上传图片可一次多选，自动压缩后插入
               </FormDescription>
               <FormMessage />
             </FormItem>
