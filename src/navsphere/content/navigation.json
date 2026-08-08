@@ -15,7 +15,7 @@
           "longDescription": "",
           "tags": [],
           "icon": "https://tihe.cc/favicon.ico",
-          "useDefaultIcon": false,
+          "useDefaultIcon": true,
           "enabled": true
         }
       ],
