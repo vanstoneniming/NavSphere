@@ -164,6 +164,16 @@ export default async function SiteDetailPage({ params }: Params) {
                 </Button>
               </div>
             </div>
+
+            {/* 返回导航 */}
+            <div className="flex justify-center border-t px-5 py-4 sm:py-5">
+              <Button variant="ghost" asChild className="text-muted-foreground">
+                <Link href="/">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  返回首页
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
