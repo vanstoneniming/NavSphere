@@ -330,7 +330,7 @@
       "items": [
         {
           "id": "item-1785757549919",
-          "title": "开源高中数学题库系统 —— MathBank 题库工作台",
+          "title": "MathBank 题库工作台",
           "href": "https://github.com/JudgePeach/math-question-bank",
           "description": "本地化高中数学题库管理系统，支持 LaTeX 实时渲染、智能大模型 AI 解析与 OCR 公式识别。 - JudgePeach/math-question-bank",
           "longDescription": "",
