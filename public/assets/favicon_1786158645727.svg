@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>校园选课系统</title>
+    <script type="module" crossorigin src="/assets/index-C1oqbyXw.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/dayjs.min-CeCVojfG.js">
+    <link rel="modulepreload" crossorigin href="/assets/runtime-core.esm-bundler-DtEpiMEU.js">
+    <link rel="modulepreload" crossorigin href="/assets/useApi-CROJJdhE-D5FR6v2z.js">
+    <link rel="modulepreload" crossorigin href="/assets/router-CeFf7po-.js">
+    <link rel="modulepreload" crossorigin href="/assets/message-box-Bcqqb4qq.js">
+    <link rel="modulepreload" crossorigin href="/assets/_plugin-vue_export-helper-BDNMzG2s.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CNAilkS5.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
