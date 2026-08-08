@@ -38,10 +38,13 @@
         },
         {
           "id": "2_2",
-          "title": "题库与课件速查",
+          "title": "智学题库 | 北京地区",
           "href": "https://ti.video",
           "description": "中学多学科试题、试卷及教案资源快速检索与下载平台。",
+          "longDescription": "",
+          "tags": [],
           "icon": "https://ti.video/favicon.ico",
+          "useDefaultIcon": false,
           "enabled": true
         },
         {
