@@ -65,7 +65,7 @@
           "longDescription": "",
           "tags": [],
           "icon": "/assets/img_1786158177539.png",
-          "useDefaultIcon": false,
+          "useDefaultIcon": true,
           "enabled": true
         },
         {
