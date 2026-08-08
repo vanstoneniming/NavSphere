@@ -137,7 +137,7 @@
     },
     {
       "id": "4",
-      "title": "AI教育与大模型",
+      "title": "教育大模型",
       "icon": "Brain",
       "description": "AI助教、智能写作、课件生成及通用大语言模型",
       "enabled": true,
