@@ -284,7 +284,7 @@
           "description": "微信搜一搜【智教云栈】，获取最新的教师开源工具评测与资源下载。",
           "longDescription": "![图片](/assets/img_1786159983265.png)",
           "tags": [],
-          "icon": "https://www.zhijiaoyunzhan.com/favicon.ico",
+          "icon": "",
           "useDefaultIcon": true,
           "enabled": true
         },
