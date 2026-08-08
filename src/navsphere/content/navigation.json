@@ -33,6 +33,14 @@
           "href": "https://cs.tihe.cc/",
           "description": "为中小学打造的轻量选课平台：学校自助开通，学生短链登录，教学处一站完成发布与统计。",
           "icon": "/assets/favicon_1786158645727.svg"
+        },
+        {
+          "id": "item-1786158791339",
+          "enabled": true,
+          "title": "K12 排课表系统",
+          "href": "https://pk.tihe.cc/admin/teachers",
+          "description": "为中小学打造的轻量选课平台：学校自助开通，学生短链登录，教学处一站完成发布与统计。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=pk.tihe.cc"
         }
       ],
       "subCategories": []
