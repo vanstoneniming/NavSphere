@@ -76,7 +76,7 @@
           "longDescription": "",
           "tags": [],
           "icon": "https://ti.video/favicon.ico",
-          "useDefaultIcon": false,
+          "useDefaultIcon": true,
           "enabled": true
         },
         {
