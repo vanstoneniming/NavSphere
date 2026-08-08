@@ -17,6 +17,14 @@
           "icon": "https://tihe.cc/favicon.ico",
           "useDefaultIcon": true,
           "enabled": true
+        },
+        {
+          "id": "item-1786158615759",
+          "enabled": true,
+          "title": "极简成绩统计",
+          "href": "https://count.mingzi.net/",
+          "description": "成绩统计，一分两率，学生成绩小条快速制作",
+          "icon": "/assets/favicon_1786158576403.svg"
         }
       ],
       "subCategories": []
