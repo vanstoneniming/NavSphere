@@ -10,6 +10,7 @@
     "theme": "system"
   },
   "navigation": {
-    "linkTarget": "_blank"
+    "linkTarget": "_blank",
+    "previewEnabled": true
   }
 }

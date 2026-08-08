@@ -20,6 +20,11 @@ interface NavigationCardProps {
 export function NavigationCard({ item, siteConfig }: NavigationCardProps) {
   // 获取链接打开方式，默认为新窗口
   const linkTarget = siteConfig?.navigation?.linkTarget || '_blank'
+  // 是否启用站内预览页（详情页），默认启用
+  const previewEnabled = siteConfig?.navigation?.previewEnabled ?? true
+
+  const href = previewEnabled ? `/site/${item.id}` : item.href
+  const target = previewEnabled ? undefined : linkTarget
 
   return (
     <TooltipProvider>
@@ -27,8 +32,8 @@ export function NavigationCard({ item, siteConfig }: NavigationCardProps) {
         <TooltipTrigger asChild>
           <Card className="overflow-hidden transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
             <Link
-              href={item.href}
-              target={linkTarget}
+              href={href}
+              target={target}
               rel="noopener noreferrer"
               className="block h-full"
             >

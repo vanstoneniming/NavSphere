@@ -74,11 +74,16 @@ export function SearchBar({ onSearch, searchResults, searchQuery, siteConfig }: 
   const handleItemSelect = (item: NavigationItem | NavigationSubItem) => {
     const itemWithHref = item as NavigationSubItem
     if (itemWithHref.href) {
-      const linkTarget = siteConfig?.navigation?.linkTarget || '_blank'
-      if (linkTarget === '_self') {
-        window.location.href = itemWithHref.href
+      // 启用站内预览页时，搜索结果也进入预览页
+      if (siteConfig?.navigation?.previewEnabled ?? true) {
+        window.location.href = `/site/${itemWithHref.id}`
       } else {
-        window.open(itemWithHref.href, linkTarget)
+        const linkTarget = siteConfig?.navigation?.linkTarget || '_blank'
+        if (linkTarget === '_self') {
+          window.location.href = itemWithHref.href
+        } else {
+          window.open(itemWithHref.href, linkTarget)
+        }
       }
     }
     onSearch('')

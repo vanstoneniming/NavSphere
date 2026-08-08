@@ -341,7 +341,9 @@ export default function ItemsPage() {
     const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.href.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.longDescription?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.tags || []).some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
 
     const matchesEnabled =
       enabledFilter === "all" ? true :
@@ -471,9 +473,30 @@ export default function ItemsPage() {
                                 {item.description}
                               </div>
                             )}
+                            {item.tags && item.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mt-1.5">
+                                {item.tags.slice(0, 5).map(tag => (
+                                  <Badge key={tag} variant="outline" className="text-[10px] font-normal">
+                                    {tag}
+                                  </Badge>
+                                ))}
+                                {item.tags.length > 5 && (
+                                  <span className="text-[10px] text-muted-foreground">+{item.tags.length - 5}</span>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => window.open(`/site/${item.id}`, '_blank')}
+                            title="预览详情页"
+                          >
+                            <Icons.image className="h-4 w-4" />
+                          </Button>
                           <Button
                             variant="ghost"
                             size="icon"

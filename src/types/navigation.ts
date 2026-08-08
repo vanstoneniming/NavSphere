@@ -13,6 +13,8 @@ export interface NavigationSubItemRaw {
   title: string
   href: string
   description?: string
+  longDescription?: string
+  tags?: string[]
   icon?: string
   useDefaultIcon?: boolean
   enabled: boolean
@@ -25,6 +27,8 @@ export interface NavigationSubItem {
   title: string
   href: string
   description?: string
+  longDescription?: string
+  tags?: string[]
   icon?: string
   useDefaultIcon?: boolean
   enabled: boolean

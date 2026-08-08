@@ -11,6 +11,7 @@ export interface SiteConfig {
   }
   navigation: {
     linkTarget: '_blank' | '_self'
+    previewEnabled?: boolean
   }
 }
 
@@ -27,5 +28,6 @@ export interface SiteInfo {
   }
   navigation: {
     linkTarget: string
+    previewEnabled?: boolean
   }
 } 

@@ -27,6 +27,8 @@ const formSchema = z.object({
   href: z.string().url({ message: "请输入有效的网站链接" }),
   icon: z.string().optional(),
   description: z.string().optional(),
+  longDescription: z.string().optional(),
+  tags: z.string().optional(),
   enabled: z.boolean().default(true),
   useDefaultIcon: z.boolean().default(false),
 })
@@ -42,13 +44,19 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues
-      ? { ...defaultValues, useDefaultIcon: defaultValues.useDefaultIcon ?? false }
+      ? {
+          ...defaultValues,
+          useDefaultIcon: defaultValues.useDefaultIcon ?? false,
+          tags: (defaultValues.tags || []).join(','),
+        }
       : {
           id: String(Date.now()),
           title: "",
           href: "",
           icon: "",
           description: "",
+          longDescription: "",
+          tags: "",
           enabled: true,
           useDefaultIcon: false,
         }
@@ -57,6 +65,7 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
   const isSubmitting = form.formState.isSubmitting
   const [isUploading, setIsUploading] = useState(false)
   const [isFetchingMetadata, setIsFetchingMetadata] = useState(false)
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
 
   // 监听 href 字段变化，自动获取网站信息
   const hrefValue = form.watch("href")
@@ -126,6 +135,67 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
     }
   }
 
+  const uploadImage = async () => {
+    if (isUploadingImage) return
+
+    // 动态创建文件选择器，选择图片后上传到站内资源，再以 Markdown 图片语法插入详细介绍
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+      if (!file) return
+
+      try {
+        setIsUploadingImage(true)
+
+        const base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result as string)
+          reader.onerror = reject
+          reader.readAsDataURL(file)
+        })
+
+        const response = await fetch('/api/resource', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ image: base64 }),
+        })
+
+        if (!response.ok) {
+          throw new Error(`上传失败: ${response.status} ${response.statusText}`)
+        }
+
+        const data = await response.json()
+        if (!data.imageUrl) {
+          throw new Error('未获取到上传后的图片URL')
+        }
+
+        const current = form.getValues('longDescription') || ''
+        const insertText = `![图片](${data.imageUrl})`
+        const separator = current === '' || current.endsWith('\n') ? '' : '\n\n'
+        form.setValue('longDescription', current + separator + insertText)
+
+        toast({
+          title: "成功",
+          description: "图片已插入详细介绍末尾"
+        })
+      } catch (error) {
+        console.error('图片上传失败:', error)
+        toast({
+          title: "错误",
+          description: error instanceof Error ? error.message : '图片上传失败，请重试',
+          variant: "destructive"
+        })
+      } finally {
+        setIsUploadingImage(false)
+      }
+    }
+    input.click()
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(async (data) => {
@@ -135,6 +205,10 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
             title: data.title,
             href: data.href,
             description: data.description,
+            longDescription: data.longDescription,
+            tags: data.tags
+              ? data.tags.split(/[,，]/).map((t) => t.trim()).filter(Boolean)
+              : [],
             icon: data.icon,
             useDefaultIcon: data.useDefaultIcon,
             enabled: data.enabled
@@ -343,6 +417,63 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>标签</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="用逗号分隔多个标签，如：AI工具, 备课, 免费"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                标签会展示在站点详情页上，方便浏览者快速识别
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="longDescription"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>详细介绍（支持 Markdown 和图片）</FormLabel>
+              <FormControl>
+                <div className="space-y-2">
+                  <Textarea
+                    placeholder={
+                      "支持 Markdown 格式，例如：\n\n## 简介\n这是一款**很好用**的工具。\n\n- 特点一\n- 特点二\n\n![图片描述](图片链接)"
+                    }
+                    className="min-h-[180px] font-mono text-sm leading-relaxed"
+                    {...field}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={isUploadingImage}
+                    onClick={uploadImage}
+                  >
+                    {isUploadingImage ? (
+                      <Icons.loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <Icons.image className="mr-2 h-4 w-4" />
+                    )}
+                    {isUploadingImage ? "上传中..." : "上传图片"}
+                  </Button>
+                </div>
+              </FormControl>
+              <FormDescription>
+                未填写时，详情页将显示"网站描述"的内容。支持 # 标题、**加粗**、- 列表、[链接](url)、![图片](url)
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

@@ -16,7 +16,8 @@ export function processSiteData(siteDataRaw: SiteInfo): SiteConfig {
             linkTarget: (siteDataRaw.navigation?.linkTarget === '_blank' ||
                 siteDataRaw.navigation?.linkTarget === '_self')
                 ? siteDataRaw.navigation.linkTarget
-                : '_blank'
+                : '_blank',
+            previewEnabled: siteDataRaw.navigation?.previewEnabled ?? true
         }
     } as SiteConfig
 }
@@ -44,6 +45,8 @@ export function processNavigationSubItem(item: NavigationSubItemRaw): Navigation
         title: item.title,
         href: item.href,
         description: item.description,
+        longDescription: item.longDescription,
+        tags: item.tags,
         icon: item.icon,
         useDefaultIcon: item.useDefaultIcon,
         enabled: item.enabled,
