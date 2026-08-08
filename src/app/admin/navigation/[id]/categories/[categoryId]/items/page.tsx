@@ -433,6 +433,9 @@ export default function CategoryItemsPage() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>添加站点</DialogTitle>
+                  <DialogDescription className="sr-only">
+                    填写网站信息并保存，即可添加到当前子分类
+                  </DialogDescription>
                 </DialogHeader>
                 <AddItemForm 
                   onSubmit={async (values) => {
@@ -556,6 +559,9 @@ export default function CategoryItemsPage() {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>编辑站点</DialogTitle>
+                <DialogDescription className="sr-only">
+                  修改站点信息后保存，改动将同步到导航首页
+                </DialogDescription>
               </DialogHeader>
               <AddItemForm
                 defaultValues={editingItem?.item}
