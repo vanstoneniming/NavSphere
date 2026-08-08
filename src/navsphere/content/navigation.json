@@ -254,6 +254,15 @@
         }
       ],
       "subCategories": []
+    },
+    {
+      "id": "1786157700253",
+      "title": "优选开源站",
+      "icon": "FolderKanban",
+      "description": "",
+      "enabled": true,
+      "items": [],
+      "subCategories": []
     }
   ]
 }
