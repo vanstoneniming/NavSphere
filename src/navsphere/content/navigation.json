@@ -243,11 +243,14 @@
         },
         {
           "id": "item-1786193892730",
-          "enabled": true,
           "title": "飞象老师",
-          "href": "https://www.feixianglaoshi.com/#/home?featureId=20",
+          "href": "https://www.feixianglaoshi.com",
           "description": "飞象老师，一句话生成专业级互动课件",
-          "icon": "/assets/favicon_1786193865023.png"
+          "longDescription": "",
+          "tags": [],
+          "icon": "/assets/favicon_1786193865023.png",
+          "useDefaultIcon": true,
+          "enabled": true
         }
       ],
       "subCategories": []
