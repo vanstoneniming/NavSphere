@@ -71,11 +71,14 @@
         },
         {
           "id": "item-1785756047344",
-          "enabled": true,
-          "title": "鲸屿组卷 - 一个试卷免费下载的网站，同时可以一键组卷",
+          "title": "鲸屿组卷 | 高中物理",
           "href": "https://www.jingyuzujuan.com/",
-          "description": "访问 www.jingyuzujuan.com",
-          "icon": "/assets/favicon_1785756043323.png"
+          "description": "鲸屿组卷 - 一个试卷免费下载的网站，同时可以一键组卷。\n高中物理现有资源丰富。",
+          "longDescription": "",
+          "tags": [],
+          "icon": "/assets/favicon_1785756043323.png",
+          "useDefaultIcon": false,
+          "enabled": true
         }
       ],
       "subCategories": []
