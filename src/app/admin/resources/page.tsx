@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/registry/new-york/ui/card"
 import { Input } from "@/registry/new-york/ui/input"
 import { Button } from "@/registry/new-york/ui/button"
 import { useToast } from "@/registry/new-york/hooks/use-toast"
+import { fileToCompressedDataUrl } from "@/lib/image-utils"
 
 import {
   Loader2,
@@ -338,16 +339,9 @@ export default function ResourceManagement() {
     }
   };
 
-  // Helper function to convert file to Base64
+  // Helper function to convert file to Base64（大图自动压缩，避免 413）
   const toBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(reader.result as string); // Return Base64 string
-      };
-      reader.onerror = (error) => reject(error);
-    });
+    return fileToCompressedDataUrl(file);
   };
 
   const copyToClipboard = (url: string) => {

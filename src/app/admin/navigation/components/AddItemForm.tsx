@@ -20,6 +20,7 @@ import { Textarea } from "@/registry/new-york/ui/textarea"
 import { Switch } from "@/registry/new-york/ui/switch"
 import { useState, useEffect } from "react"
 import { useToast } from "@/registry/new-york/hooks/use-toast"
+import { fileToCompressedDataUrl } from "@/lib/image-utils"
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -149,12 +150,7 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
       try {
         setIsUploadingImage(true)
 
-        const base64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onload = () => resolve(reader.result as string)
-          reader.onerror = reject
-          reader.readAsDataURL(file)
-        })
+        const base64 = await fileToCompressedDataUrl(file)
 
         const response = await fetch('/api/resource', {
           method: 'POST',
@@ -329,13 +325,8 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
                           try {
                             setIsUploading(true);
 
-                            // 将文件转换为 base64
-                            const base64 = await new Promise<string>((resolve, reject) => {
-                              const reader = new FileReader();
-                              reader.onload = () => resolve(reader.result as string);
-                              reader.onerror = reject;
-                              reader.readAsDataURL(file);
-                            });
+                            // 将文件转换为 base64（大图自动压缩，避免 413）
+                            const base64 = await fileToCompressedDataUrl(file);
 
                             const response = await fetch('/api/resource', {
                               method: 'POST',

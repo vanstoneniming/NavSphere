@@ -27,6 +27,7 @@ import {
   TableRow,
 } from "@/registry/new-york/ui/table"
 import { Checkbox } from "@/registry/new-york/ui/checkbox"
+import { fileToCompressedDataUrl } from "@/lib/image-utils"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -537,12 +538,7 @@ export default function SiteListPage() {
         if (target === 'add') setIsUploadingAddImage(true)
         else setIsUploadingEditImage(true)
 
-        const base64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onload = () => resolve(reader.result as string)
-          reader.onerror = reject
-          reader.readAsDataURL(file)
-        })
+        const base64 = await fileToCompressedDataUrl(file)
 
         const response = await fetch('/api/resource', {
           method: 'POST',
@@ -1085,13 +1081,8 @@ export default function SiteListPage() {
     try {
       setUploading(true)
 
-      // 将文件转换为 base64
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(reader.result as string)
-        reader.onerror = reject
-        reader.readAsDataURL(file)
-      })
+      // 将文件转换为 base64（大图自动压缩，避免 413）
+      const base64 = await fileToCompressedDataUrl(file)
 
       const response = await fetch('/api/resource', {
         method: 'POST',
