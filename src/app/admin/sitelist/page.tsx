@@ -77,6 +77,8 @@ interface Site {
   name: string
   url: string
   description?: string
+  longDescription?: string
+  tags?: string[]
   createdAt: string
   updatedAt: string
 }
@@ -104,6 +106,8 @@ export default function SiteListPage() {
   const [deletingSite, setDeletingSite] = useState<Site | null>(null)
   const [isUploadingAddIcon, setIsUploadingAddIcon] = useState(false)
   const [isUploadingEditIcon, setIsUploadingEditIcon] = useState(false)
+  const [isUploadingAddImage, setIsUploadingAddImage] = useState(false)
+  const [isUploadingEditImage, setIsUploadingEditImage] = useState(false)
   const [isBatchDeleting, setIsBatchDeleting] = useState(false)
   const [isBatchMoving, setIsBatchMoving] = useState(false)
   const [showMoveDialog, setShowMoveDialog] = useState(false)
@@ -117,6 +121,8 @@ export default function SiteListPage() {
     name: '',
     url: '',
     description: '',
+    longDescription: '',
+    tags: '',
     icon: '',
     useDefaultIcon: false,
     categoryId: '',
@@ -126,6 +132,8 @@ export default function SiteListPage() {
     name: '',
     url: '',
     description: '',
+    longDescription: '',
+    tags: '',
     icon: '',
     useDefaultIcon: false,
     categoryId: '',
@@ -202,6 +210,8 @@ export default function SiteListPage() {
               name: item.title,
               url: item.href,
               description: item.description,
+              longDescription: item.longDescription,
+              tags: item.tags,
               createdAt: '',
               updatedAt: '',
             }));
@@ -513,6 +523,58 @@ export default function SiteListPage() {
     }
   }
 
+  const uploadDetailImage = async (target: 'add' | 'edit') => {
+    if ((target === 'add' && isUploadingAddImage) || (target === 'edit' && isUploadingEditImage)) return
+
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+      if (!file) return
+
+      try {
+        if (target === 'add') setIsUploadingAddImage(true)
+        else setIsUploadingEditImage(true)
+
+        const base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result as string)
+          reader.onerror = reject
+          reader.readAsDataURL(file)
+        })
+
+        const response = await fetch('/api/resource', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64 }),
+        })
+        if (!response.ok) throw new Error(`上传失败: ${response.status}`)
+        const data = await response.json()
+        if (!data.imageUrl) throw new Error('未获取到上传后的图片URL')
+
+        if (target === 'add') {
+          const current = newSite.longDescription || ''
+          const separator = current === '' || current.endsWith('\n') ? '' : '\n\n'
+          setNewSite({ ...newSite, longDescription: current + separator + `![图片](${data.imageUrl})` })
+        } else {
+          const current = editSite.longDescription || ''
+          const separator = current === '' || current.endsWith('\n') ? '' : '\n\n'
+          setEditSite({ ...editSite, longDescription: current + separator + `![图片](${data.imageUrl})` })
+        }
+
+        toast({ title: "成功", description: "图片已插入详细介绍末尾" })
+      } catch (error) {
+        console.error('图片上传失败:', error)
+        toast({ title: "错误", description: error instanceof Error ? error.message : '图片上传失败，请重试', variant: "destructive" })
+      } finally {
+        if (target === 'add') setIsUploadingAddImage(false)
+        else setIsUploadingEditImage(false)
+      }
+    }
+    input.click()
+  }
+
   const handleAddSite = async () => {
     // 防止重复提交
     if (isAddingSubmitting) {
@@ -544,6 +606,10 @@ export default function SiteListPage() {
         title: newSite.name,
         href: newSite.url,
         description: newSite.description,
+        longDescription: newSite.longDescription,
+        tags: newSite.tags
+          ? newSite.tags.split(/[,，]/).map((t) => t.trim()).filter(Boolean)
+          : [],
         icon: newSite.icon,
         useDefaultIcon: newSite.useDefaultIcon,
         enabled: true
@@ -590,6 +656,8 @@ export default function SiteListPage() {
         name: '',
         url: '',
         description: '',
+        longDescription: '',
+        tags: '',
         icon: '',
         useDefaultIcon: false,
         categoryId: '',
@@ -637,6 +705,10 @@ export default function SiteListPage() {
         title: editSite.name,
         href: editSite.url,
         description: editSite.description,
+        longDescription: editSite.longDescription,
+        tags: editSite.tags
+          ? editSite.tags.split(/[,，]/).map((t) => t.trim()).filter(Boolean)
+          : [],
         icon: editSite.icon,
         useDefaultIcon: editSite.useDefaultIcon,
         enabled: true
@@ -753,6 +825,8 @@ export default function SiteListPage() {
         name: '',
         url: '',
         description: '',
+        longDescription: '',
+        tags: '',
         icon: '',
         useDefaultIcon: false,
         categoryId: '',
@@ -813,6 +887,8 @@ export default function SiteListPage() {
       name: site.name,
       url: site.url,
       description: site.description || '',
+      longDescription: site.longDescription || '',
+      tags: (site.tags || []).join(', '),
       icon: icon,
       useDefaultIcon,
       categoryId,
@@ -1168,6 +1244,8 @@ export default function SiteListPage() {
                   name: '',
                   url: '',
                   description: '',
+                  longDescription: '',
+                  tags: '',
                   icon: '',
                   useDefaultIcon: false,
                   categoryId: '',
@@ -1372,6 +1450,47 @@ export default function SiteListPage() {
                       className="resize-none"
                       disabled={isAddingSubmitting}
                     />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="add-tags">标签</Label>
+                    <Input
+                      id="add-tags"
+                      value={newSite.tags}
+                      onChange={(e) => setNewSite({ ...newSite, tags: e.target.value })}
+                      placeholder="用逗号分隔多个标签，如：AI工具, 备课, 免费"
+                      disabled={isAddingSubmitting}
+                    />
+                    <div className="text-xs text-muted-foreground">
+                      标签会展示在站点详情页上
+                    </div>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="add-longDescription">详细介绍（支持 Markdown 和图片）</Label>
+                    <Textarea
+                      id="add-longDescription"
+                      value={newSite.longDescription}
+                      onChange={(e) => setNewSite({ ...newSite, longDescription: e.target.value })}
+                      placeholder={"支持 Markdown 格式，例如：\n\n## 简介\n这是一款**很好用**的工具。\n\n- 特点一\n- 特点二\n\n![图片描述](图片链接)"}
+                      className="min-h-[180px] font-mono text-sm leading-relaxed"
+                      disabled={isAddingSubmitting}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={isAddingSubmitting || isUploadingAddImage}
+                      onClick={() => uploadDetailImage('add')}
+                    >
+                      {isUploadingAddImage ? (
+                        <Icons.loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Icons.image className="mr-2 h-4 w-4" />
+                      )}
+                      {isUploadingAddImage ? "上传中..." : "上传图片"}
+                    </Button>
+                    <div className="text-xs text-muted-foreground">
+                      未填写时详情页显示"描述"内容；上传的图片自动插入详细介绍末尾
+                    </div>
                   </div>
                 </div>
                 <DialogFooter>
@@ -1586,6 +1705,47 @@ export default function SiteListPage() {
                       className="resize-none"
                       disabled={isEditingSubmitting}
                     />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="edit-tags">标签</Label>
+                    <Input
+                      id="edit-tags"
+                      value={editSite.tags}
+                      onChange={(e) => setEditSite({ ...editSite, tags: e.target.value })}
+                      placeholder="用逗号分隔多个标签，如：AI工具, 备课, 免费"
+                      disabled={isEditingSubmitting}
+                    />
+                    <div className="text-xs text-muted-foreground">
+                      标签会展示在站点详情页上
+                    </div>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="edit-longDescription">详细介绍（支持 Markdown 和图片）</Label>
+                    <Textarea
+                      id="edit-longDescription"
+                      value={editSite.longDescription}
+                      onChange={(e) => setEditSite({ ...editSite, longDescription: e.target.value })}
+                      placeholder={"支持 Markdown 格式，例如：\n\n## 简介\n这是一款**很好用**的工具。\n\n- 特点一\n- 特点二\n\n![图片描述](图片链接)"}
+                      className="min-h-[180px] font-mono text-sm leading-relaxed"
+                      disabled={isEditingSubmitting}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={isEditingSubmitting || isUploadingEditImage}
+                      onClick={() => uploadDetailImage('edit')}
+                    >
+                      {isUploadingEditImage ? (
+                        <Icons.loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Icons.image className="mr-2 h-4 w-4" />
+                      )}
+                      {isUploadingEditImage ? "上传中..." : "上传图片"}
+                    </Button>
+                    <div className="text-xs text-muted-foreground">
+                      未填写时详情页显示"描述"内容；上传的图片自动插入详细介绍末尾
+                    </div>
                   </div>
                 </div>
                 <DialogFooter>
