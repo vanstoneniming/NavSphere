@@ -218,6 +218,8 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
           console.error('保存失败:', error)
         }
       })} className="space-y-4">
+        <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
+        <div className="space-y-4">
         <FormField
           control={form.control}
           name="href"
@@ -421,6 +423,8 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
             </FormItem>
           )}
         />
+        </div>
+        <div className="space-y-4">
         <FormField
           control={form.control}
           name="tags"
@@ -500,6 +504,8 @@ export function AddItemForm({ onSubmit, onCancel, defaultValues }: AddItemFormPr
             </FormItem>
           )}
         />
+        </div>
+        </div>
         <div className="flex justify-end space-x-2">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting && (

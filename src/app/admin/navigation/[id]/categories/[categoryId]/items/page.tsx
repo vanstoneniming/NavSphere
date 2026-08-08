@@ -430,7 +430,7 @@ export default function CategoryItemsPage() {
                   添加站点
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[900px]">
                 <DialogHeader>
                   <DialogTitle>添加站点</DialogTitle>
                   <DialogDescription className="sr-only">
@@ -556,7 +556,7 @@ export default function CategoryItemsPage() {
           </DragDropContext>
 
           <Dialog open={!!editingItem} onOpenChange={(open) => !open && setEditingItem(null)}>
-            <DialogContent>
+            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[900px]">
               <DialogHeader>
                 <DialogTitle>编辑站点</DialogTitle>
                 <DialogDescription className="sr-only">
@@ -577,7 +577,7 @@ export default function CategoryItemsPage() {
           </Dialog>
 
           <Dialog open={!!deletingItem} onOpenChange={(open) => !open && setDeletingItem(null)}>
-            <DialogContent>
+            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[900px]">
               <DialogHeader>
                 <DialogTitle>删除确认</DialogTitle>
                 <DialogDescription>

@@ -67,11 +67,6 @@ const menuItems = [
     ]
   },
   {
-    title: "视频管理",
-    href: "/admin/videos",
-    icon: Monitor
-  },
-  {
     title: "投稿审核",
     href: "/admin/submissions",
     icon: Inbox

@@ -1263,11 +1263,15 @@ export default function SiteListPage() {
                   添加站点
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[900px]">
                 <DialogHeader>
                   <DialogTitle>添加站点</DialogTitle>
+                  <DialogDescription className="sr-only">
+                    填写网站信息并保存，即可添加站点
+                  </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
+                <div className="grid gap-4 py-4 lg:grid-cols-2 lg:gap-6">
+                  <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="url">站点链接 *</Label>
                     <div className="flex items-center space-x-2">
@@ -1451,6 +1455,8 @@ export default function SiteListPage() {
                       disabled={isAddingSubmitting}
                     />
                   </div>
+                  </div>
+                  <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="add-tags">标签</Label>
                     <Input
@@ -1492,6 +1498,7 @@ export default function SiteListPage() {
                       未填写时详情页显示"描述"内容；上传的图片自动插入详细介绍末尾
                     </div>
                   </div>
+                  </div>
                 </div>
                 <DialogFooter>
                   <Button
@@ -1518,11 +1525,15 @@ export default function SiteListPage() {
                 setShowEditDialog(false)
               }
             }}>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[900px]">
                 <DialogHeader>
                   <DialogTitle>编辑站点</DialogTitle>
+                  <DialogDescription className="sr-only">
+                    修改站点信息后保存，改动将同步到导航首页
+                  </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
+                <div className="grid gap-4 py-4 lg:grid-cols-2 lg:gap-6">
+                  <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="edit-url">站点链接 *</Label>
                     <div className="flex items-center space-x-2">
@@ -1706,6 +1717,8 @@ export default function SiteListPage() {
                       disabled={isEditingSubmitting}
                     />
                   </div>
+                  </div>
+                  <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="edit-tags">标签</Label>
                     <Input
@@ -1747,6 +1760,7 @@ export default function SiteListPage() {
                       未填写时详情页显示"描述"内容；上传的图片自动插入详细介绍末尾
                     </div>
                   </div>
+                  </div>
                 </div>
                 <DialogFooter>
                   <Button
@@ -1773,7 +1787,7 @@ export default function SiteListPage() {
                 setShowMoveDialog(false)
               }
             }}>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[900px]">
                 <DialogHeader>
                   <DialogTitle>批量移动站点</DialogTitle>
                   <DialogDescription>
