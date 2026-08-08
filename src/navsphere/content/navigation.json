@@ -247,11 +247,14 @@
         },
         {
           "id": "item-1786150866496",
-          "enabled": true,
-          "title": "深度拆解 TeachAny：一个把 AI 变成教学设计大师的开源项目",
+          "title": "TeachAny | AI 变成教学设计大师",
           "href": "https://mp.weixin.qq.com/s/ZE6Z7rAuQ8wMyxX5uStHrA",
-          "description": "",
-          "icon": "/assets/favicon_1786150856045.ico"
+          "description": "深度拆解 TeachAny：一个把 AI 变成教学设计大师的开源项目",
+          "longDescription": "",
+          "tags": [],
+          "icon": "/assets/favicon_1786150856045.ico",
+          "useDefaultIcon": false,
+          "enabled": true
         }
       ],
       "subCategories": []
