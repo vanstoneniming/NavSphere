@@ -317,6 +317,14 @@
           "href": "https://mp.weixin.qq.com/s/oL16KrXDKLpcYn4xByy4gA",
           "description": "aetherviz",
           "icon": "/assets/favicon_1786194393927.png"
+        },
+        {
+          "id": "item-1786239399790",
+          "enabled": true,
+          "title": "GBL 让学习像游戏一样上瘾的教学方法",
+          "href": "https://mp.weixin.qq.com/s/3r7Vodr7k172GO4VyhdZBw",
+          "description": "",
+          "icon": "/assets/favicon_1786239389421.ico"
         }
       ],
       "subCategories": []
