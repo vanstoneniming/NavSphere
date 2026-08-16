@@ -119,6 +119,14 @@
           "icon": "https://tihe.cc/favicon.ico",
           "useDefaultIcon": true,
           "enabled": true
+        },
+        {
+          "id": "item-1786853027323",
+          "enabled": true,
+          "title": "刷题实验室",
+          "href": "https://www.xuexilab.cn/library/subjects",
+          "description": "访问 www.xuexilab.cn",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=www.xuexilab.cn"
         }
       ],
       "subCategories": []
