@@ -285,6 +285,14 @@
           "description": "完全免费且易用的在线PDF拆分、合并、压缩及Word转换工具。",
           "icon": "https://www.ilovepdf.com/favicon.ico",
           "enabled": true
+        },
+        {
+          "id": "item-1787213830912",
+          "enabled": true,
+          "title": "一个学生复习系统",
+          "href": "https://shiti.yichengfuture.cn/",
+          "description": "访问 shiti.yichengfuture.cn",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=shiti.yichengfuture.cn"
         }
       ],
       "subCategories": []
