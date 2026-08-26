@@ -46,6 +46,14 @@
           "icon": "https://www.google.com/s2/favicons?sz=128&domain=sbs.tihe.cc",
           "useDefaultIcon": true,
           "enabled": true
+        },
+        {
+          "id": "item-1787746154951",
+          "enabled": true,
+          "title": "丁香的小花园工具箱",
+          "href": "https://dingxiangdehuayuanwang.top/",
+          "description": "监考、排课、pdf处理、图片处理、英语小游戏等",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=dingxiangdehuayuanwang.top"
         }
       ],
       "subCategories": []
