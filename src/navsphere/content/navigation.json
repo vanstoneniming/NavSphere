@@ -301,6 +301,14 @@
           "href": "https://shiti.yichengfuture.cn/",
           "description": "访问 shiti.yichengfuture.cn",
           "icon": "https://www.google.com/s2/favicons?sz=128&domain=shiti.yichengfuture.cn"
+        },
+        {
+          "id": "item-1788312102459",
+          "enabled": true,
+          "title": "7个免登录工具网站，打开即用，建议直接收藏！",
+          "href": "https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA",
+          "description": "今天这篇，专门整理了8个完全不用登录、打开就能用的工具网站。覆盖PDF处理、图片修图、文件传输、隐私保护等高频场景。不用收藏吃灰，建议直接加到浏览器书签栏。",
+          "icon": "/assets/favicon_1788312081393.ico"
         }
       ],
       "subCategories": []
