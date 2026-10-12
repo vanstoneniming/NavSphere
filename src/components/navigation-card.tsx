@@ -50,7 +50,7 @@ export function NavigationCard({ item, siteConfig }: NavigationCardProps) {
                   <div className="space-y-0.5 sm:space-y-1">
                     <CardTitle className="text-sm sm:text-base">{item.title}</CardTitle>
                     {item.description && (
-                      <CardDescription className="text-xs sm:text-sm line-clamp-1">
+                      <CardDescription className="line-clamp-2 text-xs sm:text-sm">
                         {item.description}
                       </CardDescription>
                     )}

@@ -87,7 +87,7 @@ export default async function SiteDetailPage({ params }: Params) {
 
   return (
     <Container>
-      <div className="min-h-[calc(100vh-80px)] py-4 sm:py-6">
+      <div className="py-4 sm:py-6">
         {/* 顶部返回与面包屑 */}
         <div className="mb-4 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
           <Link

@@ -100,7 +100,7 @@ export function Sidebar({ className, navigationData, siteInfo, onClose }: Sideba
           <Button
             variant="ghost"
             size="icon"
-            className="ml-auto sm:hidden"
+            className="ml-auto lg:hidden"
             onClick={onClose}
             aria-label="关闭侧边栏"
           >

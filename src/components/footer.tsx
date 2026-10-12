@@ -1,22 +1,23 @@
-import Link from 'next/link'
-import { Icons } from '@/components/icons'
 import type { SiteConfig } from '@/types/site'
+import { WechatQrPanel } from '@/components/wechat-official-account'
 
 interface FooterProps {
   siteInfo: SiteConfig
 }
 
+/**
+ * 站点页脚：版权信息 + 智教云栈公众号二维码（反馈入口）
+ */
 export function Footer({ siteInfo }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t py-6 md:py-0">
-      <div className="container flex flex-col items-center gap-4 md:h-16 md:flex-row md:justify-center">
-        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-          <p className="text-center text-sm leading-loose text-muted-foreground">
-            {currentYear} {siteInfo.basic.title}. All rights reserved.
-          </p>
-        </div>
+    <footer className="border-t py-5">
+      <div className="container flex flex-col items-center gap-3 px-4">
+        <WechatQrPanel size="sm" />
+        <p className="text-center text-xs text-muted-foreground">
+          {currentYear} {siteInfo.basic.title}
+        </p>
       </div>
     </footer>
   )

@@ -8,11 +8,12 @@ import { Sidebar } from '@/components/sidebar'
 import { SearchBar } from '@/components/search-bar'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Footer } from '@/components/footer'
-import { Github, HelpCircle, Puzzle, Send } from 'lucide-react'
+import { Github, Puzzle, Send } from 'lucide-react'
 import { Button } from "@/registry/new-york/ui/button"
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Menu } from 'lucide-react'
+import { WechatFeedbackButton } from '@/components/wechat-official-account'
 
 interface NavigationContentProps {
   navigationData: NavigationData
@@ -105,8 +106,9 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
   }
 
   return (
-    <div className="flex flex-col sm:flex-row min-h-screen">
-      <div className="hidden sm:block">
+    // lg 以下收起侧栏为抽屉，避免窄屏被 w-64 侧栏挤占主内容
+    <div className="flex min-h-screen flex-col lg:flex-row">
+      <div className="hidden lg:block">
         <Sidebar
           navigationData={navigationData}
           siteInfo={siteData}
@@ -115,12 +117,12 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
       </div>
 
       <div className={cn(
-        "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm transition-all sm:hidden",
-        isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm transition-all lg:hidden",
+        isSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
       )}>
         <div className={cn(
-          "fixed inset-y-0 right-0 sm:left-0 w-3/4 max-w-xs bg-background shadow-lg transform transition-transform duration-200 ease-in-out",
-          isSidebarOpen ? "translate-x-0" : "translate-x-full sm:-translate-x-full"
+          "fixed inset-y-0 left-0 w-3/4 max-w-xs transform bg-background shadow-lg transition-transform duration-200 ease-in-out",
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}>
           <Sidebar
             navigationData={navigationData}
@@ -184,24 +186,12 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
                   <Puzzle className="h-5 w-5" />
                 </Button>
               </Link>
-              <Link
-                href="https://mp.weixin.qq.com/s/XBeedyqHGJtaAa_v9EXz4A"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="查看帮助文档"
-              >
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:bg-accent hover:text-accent-foreground"
-                >
-                  <HelpCircle className="h-5 w-5" />
-                </Button>
-              </Link>
+              {/* 公众号反馈入口：扫码留言报错/需求 */}
+              <WechatFeedbackButton />
               <Button
                 variant="ghost"
                 size="icon"
-                className="sm:hidden"
+                className="lg:hidden"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               >
                 <Menu className="h-5 w-5" />
@@ -221,7 +211,7 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
 
                   {/* 一级分类下直接挂载的站点 */}
                   {category.items && category.items.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                       {category.items.map((item) => (
                         <NavigationCard key={item.id} item={item} siteConfig={siteData} />
                       ))}
@@ -235,7 +225,7 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
                         <h3 className="text-sm font-medium text-muted-foreground">
                           {subCategory.title}
                         </h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                           {(subCategory.items || []).map((item) => (
                             <NavigationCard key={item.id} item={item} siteConfig={siteData} />
                           ))}
