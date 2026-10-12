@@ -1102,6 +1102,20 @@
           "longDescription": "## 简介\n**iLovePDF** 是易用的在线 PDF 工具集，提供拆分、合并、压缩、PDF 与 Word 互转等功能，完全面向高频办公与教学文稿处理。\n\n## 核心能力\n- PDF 合并 / 拆分 / 压缩\n- PDF 与 Word 等格式转换\n- 浏览器即可完成，无需安装客户端\n\n## 教师怎么用\n组卷后合并答题卡、压缩邮件附件、把扫描件转 Word 再编辑；处理后尽快删除云端临时文件（按站点隐私政策操作）。\n\n## 使用提示\n上传含学生信息的文件时注意隐私；重要文件建议本地工具优先。\n\n---\n\n### 参考文献与版权声明\n1. [iLovePDF 中文](https://www.ilovepdf.com/zh-cn) — 官方站点\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。"
         },
         {
+          "id": "item-1789200000001",
+          "title": "PDF24 Tools",
+          "href": "https://tools.pdf24.org/zh/",
+          "description": "免费在线 PDF 工具集：合并、拆分、压缩、转换、OCR 等，浏览器即可使用。",
+          "longDescription": "## 简介\n**PDF24 Tools** 是一套免费且易用的在线 PDF 工具集，覆盖合并、拆分、压缩、转换、OCR、加密等常见需求，浏览器即可使用，也提供桌面版 PDF24 Creator。\n\n## 核心能力\n- PDF 合并 / 拆分 / 压缩 / 旋转 / 删页 / 重排\n- PDF 与图片、办公文档等互转\n- OCR 文字识别、加水印、页码、密码保护等\n\n## 教师怎么用\n组卷后合并答题卡、压缩附件发邮件、扫描件 OCR 转可编辑文本；处理含学生信息的文件时注意隐私。\n\n## 使用提示\n官方称在线处理文件经加密传输并会尽快删除；若更在意本地安全，可改用 PDF24 Creator 离线版。站点通过广告维持免费，使用时注意页面广告干扰。\n\n---\n\n### 参考文献与版权声明\n1. [PDF24 Tools 中文站](https://tools.pdf24.org/zh/) — 官方站点\n2. [PDF24 Creator](https://tools.pdf24.org/zh/) — 同站离线方案说明\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。\n",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=tools.pdf24.org",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "PDF",
+            "效率"
+          ]
+        },
+        {
           "id": "item-1787213830912",
           "enabled": true,
           "title": "一个学生复习系统",
@@ -1109,15 +1123,6 @@
           "description": "在线试题与复习练习系统，适合课后巩固。",
           "icon": "https://www.google.com/s2/favicons?sz=128&domain=shiti.yichengfuture.cn",
           "longDescription": "## 简介\n**一个学生复习系统**提供在线试题/复习练习入口，帮助学生按进度巩固知识，也可作为教师布置线上复习任务的补充渠道。\n\n## 核心能力\n- 在线复习 / 试题练习\n- 适合学生自主巩固\n- 可作为课后任务链接\n\n## 教师怎么用\n阶段复习时分享链接，要求完成指定专题；讲评前查看正确率（若平台支持）。\n\n\n## 补充建议\n可与错题本结合：线上练习 → 导出错题 → 课堂重做。\n\n## 使用提示\n功能细节以站点实际模块为准。\n\n---\n\n### 参考文献与版权声明\n1. [学生复习系统](https://shiti.yichengfuture.cn/) — 官方站点\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。"
-        },
-        {
-          "id": "item-1788312102459",
-          "enabled": true,
-          "title": "7个免登录工具网站，打开即用，建议直接收藏！",
-          "href": "https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA",
-          "description": "整理免登录即用的 PDF/修图/传输等工具，适合加入书签。",
-          "icon": "/assets/favicon_1788312081393.ico",
-          "longDescription": "## 简介\n这是一篇整理**免登录、打开即用**工具网站的公众号推文，覆盖 PDF 处理、图片修图、文件传输、隐私保护等高频场景，适合教师收藏为“应急工具清单”。\n\n## 你能获得什么\n- 多款无需注册即可使用的在线工具入口\n- 面向办公与教学的高频刚需场景\n- 可直接加入浏览器书签栏反复使用\n\n## 使用建议\n打开原文按需试用；涉及隐私的文件优先选择可本地处理的工具，并阅读各站隐私政策。\n\n## 使用提示\n第三方站点可用性会变化，以推文内最新链接为准。\n\n---\n\n### 参考文献与版权声明\n1. [7个免登录工具网站（微信公众号文章）](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 原文\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。"
         },
         {
           "id": "item-1789100000022",
@@ -1195,6 +1200,90 @@
           "useDefaultIcon": true,
           "enabled": true,
           "tags": []
+        },
+        {
+          "id": "item-1789210000001",
+          "title": "Remove.bg",
+          "href": "https://www.remove.bg/zh",
+          "description": "AI 一键抠图，发丝级去背景，免登录即可下载透明底 PNG，适合课件配图。",
+          "longDescription": "## 简介\n**Remove.bg** 是 AI 抠图工具：上传图片后自动识别主体并移除背景，人物发丝、产品边缘处理较干净。基础功能可免登录使用。\n\n## 核心能力\n- 一键去背景，输出透明 PNG\n- 可换纯色背景（证件照等场景）\n- 边缘微调笔刷（视页面功能）\n\n## 教师怎么用\n做课件、海报需要透明人物/教具图时，拖入图片几秒下载；免费版分辨率有限，日常投屏通常够用。\n\n## 使用提示\n批量或高分辨率可能需付费；注意图片版权与学生肖像授权。\n\n---\n\n### 参考文献与版权声明\n1. [Remove.bg](https://www.remove.bg/zh) — 官方站点\n2. [7个免登录工具网站，打开即用，建议直接收藏！](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 微信公众号「新锋潮」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=www.remove.bg",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "免登录",
+            "效率"
+          ]
+        },
+        {
+          "id": "item-1789210000002",
+          "title": "TinyWow",
+          "href": "https://tinywow.com/",
+          "description": "200+ 在线工具箱：PDF/图片/视频/AI 写作等，免注册，文件约 1 小时后删除。",
+          "longDescription": "## 简介\n**TinyWow** 集成大量在线小工具，覆盖 PDF、图片、视频、AI 写作与格式转换等，打开即用、无需注册，适合应急处理。\n\n## 核心能力\n- PDF 转 Word/Excel/PPT、压缩等\n- 图片去背景、压缩、格式转换\n- 视频压缩/转换与轻量 AI 写作\n\n## 教师怎么用\n按首页分类搜索功能；日常办公轻量处理够用，专业高精度编辑仍建议专用工具。\n\n## 使用提示\n官方称上传文件约 1 小时后删除；含隐私文件请谨慎上传。\n\n---\n\n### 参考文献与版权声明\n1. [TinyWow](https://tinywow.com/) — 官方站点\n2. [7个免登录工具网站，打开即用，建议直接收藏！](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 微信公众号「新锋潮」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=tinywow.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "免登录",
+            "效率"
+          ]
+        },
+        {
+          "id": "item-1789210000003",
+          "title": "Temp Mail 临时邮箱",
+          "href": "https://temp-mail.org/",
+          "description": "一次性临时邮箱，打开即用，适合试用注册与收取验证码，用完即弃。",
+          "longDescription": "## 简介\n**Temp Mail** 提供一次性临时邮箱地址：打开网站即生成邮箱，可收验证码与激活邮件，无需注册个人账号。同类还可参考 mail.tm。\n\n## 核心能力\n- 自动生成临时邮箱\n- 网页内查看收件\n- 用完关闭即可失效\n\n## 教师怎么用\n仅用于试用类工具注册、临时下载验证；**切勿**绑定重要工作、支付或学校账号。\n\n## 使用提示\n多数临时邮箱只能收不能发；过期后无法找回密码。\n\n---\n\n### 参考文献与版权声明\n1. [Temp Mail 临时邮箱](https://temp-mail.org/) — 官方站点\n2. [mail.tm](https://mail.tm/) — 另一款极简临时邮箱（可选）\n3. [7个免登录工具网站，打开即用，建议直接收藏！](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 微信公众号「新锋潮」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=temp-mail.org",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "免登录",
+            "效率"
+          ]
+        },
+        {
+          "id": "item-1789210000004",
+          "title": "Snapdrop",
+          "href": "https://snapdrop.net/",
+          "description": "浏览器版 AirDrop：同 Wi‑Fi 点对点传文件，免安装免登录，适合手机电脑互传。",
+          "longDescription": "## 简介\n**Snapdrop** 是开源网页版近场传文件工具，类似 AirDrop。同局域网设备打开网页即可互传，基于 WebRTC 点对点，一般不经第三方存文件。\n\n## 核心能力\n- 跨平台浏览器互传\n- 同 Wi‑Fi 直连，速度快\n- 也可通过临时链接跨网传输（视版本）\n\n## 教师怎么用\n教室/办公室手机拍照传到电脑投屏；大文件比微信更合适。国内访问慢时可自寻镜像站。\n\n## 使用提示\n敏感文件优先同局域网模式；跨网中继时注意环境可信度。\n\n---\n\n### 参考文献与版权声明\n1. [Snapdrop](https://snapdrop.net/) — 官方站点\n2. [7个免登录工具网站，打开即用，建议直接收藏！](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 微信公众号「新锋潮」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=snapdrop.net",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "免登录",
+            "效率"
+          ]
+        },
+        {
+          "id": "item-1789210000005",
+          "title": "Excalidraw",
+          "href": "https://excalidraw.com/",
+          "description": "开源手绘风在线白板，免登录画流程图/架构图/思维导图，支持协作导出。",
+          "longDescription": "## 简介\n**Excalidraw** 是开源在线白板，手绘风格亲和，适合思路梳理、流程图、知识结构草图。完全免费、打开即画，支持实时协作与 PNG/SVG/JSON 导出。\n\n## 核心能力\n- 形状、箭头、文字、自由画笔\n- 实时协作（端到端加密）\n- 社区图形库与多种导出\n\n## 教师怎么用\n教研讨论共创板书草图；复习课画知识结构；导出图片插入课件。正式工程图可改用专业软件。\n\n## 使用提示\n协作链接勿公开到不可信场合；重要图请本地导出备份。\n\n---\n\n### 参考文献与版权声明\n1. [Excalidraw](https://excalidraw.com/) — 官方站点\n2. [7个免登录工具网站，打开即用，建议直接收藏！](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 微信公众号「新锋潮」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=excalidraw.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "免登录",
+            "效率"
+          ]
+        },
+        {
+          "id": "item-1789210000006",
+          "title": "QR Code Monkey",
+          "href": "https://www.qrcode-monkey.com/",
+          "description": "免费二维码美化生成器：加 Logo、渐变与外框，免登录下载 PNG/SVG。",
+          "longDescription": "## 简介\n**QR Code Monkey** 是可高度自定义的免费二维码生成器，支持颜色渐变、码点样式、中心 Logo、外框文字等，生成结果通常无水印、可下载多种格式。\n\n## 核心能力\n- URL/文本/WiFi/名片等内容类型\n- Logo、配色与样式美化\n- 下载 PNG / SVG / PDF\n\n## 教师怎么用\n班级群、作业提交页、活动海报生成带校徽色的二维码；生成后务必用手机扫码测试。\n\n## 使用提示\nLogo 过大可能影响识别，建议提高容错级别并实测。\n\n---\n\n### 参考文献与版权声明\n1. [QR Code Monkey](https://www.qrcode-monkey.com/) — 官方站点\n2. [7个免登录工具网站，打开即用，建议直接收藏！](https://mp.weixin.qq.com/s/PizUR6euvbQdygoJa0I0WA) — 微信公众号「新锋潮」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=www.qrcode-monkey.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "免登录",
+            "效率"
+          ]
         }
       ],
       "subCategories": []
