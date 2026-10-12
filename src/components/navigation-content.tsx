@@ -210,9 +210,9 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
                   </h2>
 
                   {/* 一级分类下直接挂载的站点 */}
-                  {category.items && category.items.length > 0 && (
+                  {category.items && category.items.filter((item) => item.enabled !== false).length > 0 && (
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                      {category.items.map((item) => (
+                      {category.items.filter((item) => item.enabled !== false).map((item) => (
                         <NavigationCard key={item.id} item={item} siteConfig={siteData} />
                       ))}
                     </div>
@@ -220,18 +220,26 @@ export function NavigationContent({ navigationData, siteData }: NavigationConten
 
                   {/* 二级分类及其站点 */}
                   {category.subCategories && category.subCategories.length > 0 &&
-                    category.subCategories.map((subCategory) => (
+                    category.subCategories
+                      .filter((subCategory) => subCategory.enabled !== false)
+                      .map((subCategory) => {
+                        const visibleItems = (subCategory.items || []).filter(
+                          (item) => item.enabled !== false
+                        )
+                        if (visibleItems.length === 0) return null
+                        return (
                       <div key={subCategory.id} id={subCategory.id} className="space-y-3">
                         <h3 className="text-sm font-medium text-muted-foreground">
                           {subCategory.title}
                         </h3>
                         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                          {(subCategory.items || []).map((item) => (
+                          {visibleItems.map((item) => (
                             <NavigationCard key={item.id} item={item} siteConfig={siteData} />
                           ))}
                         </div>
                       </div>
-                    ))}
+                        )
+                      })}
                 </div>
               </section>
             ))}
