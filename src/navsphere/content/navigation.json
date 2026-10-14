@@ -360,6 +360,21 @@
           "useDefaultIcon": true,
           "enabled": true,
           "tags": []
+        },
+        {
+          "id": "item-1789300000004",
+          "title": "God's Eye View",
+          "href": "https://github.com/bilawalsidhu/gods-eye-view",
+          "description": "浏览器地球可视化：叠加航班、船舶、卫星、地震等公开数据图层。",
+          "longDescription": "## 简介\n**God's Eye View** 可在浏览器浏览地球，并把航班、船舶、卫星、地震等公开数据图层叠在一起，适合地理探索、空间信息演示与数据可视化教学。\n\n## 核心能力\n- 三维地球与公开数据图层\n- 部分图层需额外账户或 API 密钥\n- 适合课堂展示与探究导入\n\n## 教师怎么用\n地理/跨学科课展示全球交通、灾害等公开数据分布；强调数据延迟与不确定性。\n\n## 使用提示\n道路车辆等可能为模拟，**不能**当成实时监控私家车或任意摄像头。勿作导航/应急决策依据；代码许可与地图、第三方数据授权要分开遵守。\n\n---\n\n### 参考文献与版权声明\n1. [God's Eye View](https://github.com/bilawalsidhu/gods-eye-view) — GitHub 官方仓库\n2. [6个开源工具：做PPT、配音、画图，按需替代](https://mp.weixin.qq.com/s/MYfSvT2AFlJgq-4vdt9w9A) — 微信公众号「硅基铁匠」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "地理",
+            "可视化"
+          ]
         }
       ],
       "subCategories": []
@@ -1072,6 +1087,36 @@
           "useDefaultIcon": true,
           "enabled": true,
           "tags": []
+        },
+        {
+          "id": "item-1789300000001",
+          "title": "PPT Master",
+          "href": "https://github.com/hugohe3/ppt-master",
+          "description": "开源 AI 流程：读 PDF/Word 等材料，生成可编辑 .pptx，适合汇报课件初稿。",
+          "longDescription": "## 简介\n**PPT Master** 是一套由 AI 代理执行的 PPT 制作流程：读取 PDF、Word 或文本材料，组织内容与版面，导出可继续编辑的 PowerPoint（.pptx），而非整页截图。\n\n## 核心能力\n- 从文档/材料生成汇报初稿\n- 输出原生文字、形状、图表与表格（视生成路线）\n- 可结合已有模板做新内容（以项目说明为准）\n\n## 教师怎么用\n拿一份不含敏感信息的教案或方案生成课件骨架，再人工删改数据、重点与学情表述。\n\n## 使用提示\n需 Python 与能读写文件的 AI 工具；使用云模型时材料可能发往服务商。“本机导出 PPT”不等于“材料完全不出网”。模型费用另算，成稿必须审校。\n\n---\n\n### 参考文献与版权声明\n1. [PPT Master](https://github.com/hugohe3/ppt-master) — GitHub 官方仓库\n2. [6个开源工具：做PPT、配音、画图，按需替代](https://mp.weixin.qq.com/s/MYfSvT2AFlJgq-4vdt9w9A) — 微信公众号「硅基铁匠」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "PPT",
+            "AI"
+          ]
+        },
+        {
+          "id": "item-1789300000003",
+          "title": "Diagram Design",
+          "href": "https://github.com/cathrynlavery/diagram-design",
+          "description": "AI Skill：用一句话生成流程图/架构图（SVG/HTML），适合方案与课件配图。",
+          "longDescription": "## 简介\n**Diagram Design** 是装在 AI 工具里的 Skill（非独立拖拽软件）：描述节点与关系后，按模板生成含 SVG 的 HTML，可浏览器打开并导出 SVG/PNG。\n\n## 核心能力\n- 文档称支持数十种图表类型（以仓库为准）\n- 可按指定站点/本地资料提取配色字体，统一风格\n- 生成后可继续让 AI 调整或手改 SVG\n\n## 教师怎么用\n知道业务流程但不想逐框摆放时，用自然语言出流程图，再贴进课件或学案。\n\n## 使用提示\n成图质量取决于模型；云端 AI 下勿上传内部敏感业务图。长期手动画图仍可用 draw.io / Excalidraw。\n\n---\n\n### 参考文献与版权声明\n1. [Diagram Design](https://github.com/cathrynlavery/diagram-design) — GitHub 官方仓库\n2. [6个开源工具：做PPT、配音、画图，按需替代](https://mp.weixin.qq.com/s/MYfSvT2AFlJgq-4vdt9w9A) — 微信公众号「硅基铁匠」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "流程图",
+            "AI"
+          ]
         }
       ],
       "subCategories": []
@@ -1284,6 +1329,21 @@
             "免登录",
             "效率"
           ]
+        },
+        {
+          "id": "item-1789300000002",
+          "title": "VoiceStudio",
+          "href": "https://github.com/debpalash/VoiceStudio",
+          "description": "开源语音制作桌面工具：克隆/设计声音、视频配音、转录与有声书工作流。",
+          "longDescription": "## 简介\n**VoiceStudio** 是语音制作桌面应用，支持声音克隆、声音设计、视频配音、转录和有声书等流程，可本地下载模型运行，也可连接远程服务。\n\n## 核心能力\n- 文案转语音、音频处理与视频配音\n- 多引擎/多语言能力（语音与转录引擎需分开看）\n- 本地模型或可选远程后端\n\n## 教师怎么用\n可为微课、课件旁白生成试听稿；公开使用合成语音应按规范标识。克隆他人声音必须获本人许可。\n\n## 使用提示\n应用代码为 AGPL-3.0，但默认 OmniVoice 等预训练模型可能为非商业许可（如 CC-BY-NC），**不能**因“开源”直接用于商业配音。Intel Mac 等环境限制见官方文档；算力与模型存储需本机承担。\n\n---\n\n### 参考文献与版权声明\n1. [VoiceStudio](https://github.com/debpalash/VoiceStudio) — GitHub 官方仓库\n2. [6个开源工具：做PPT、配音、画图，按需替代](https://mp.weixin.qq.com/s/MYfSvT2AFlJgq-4vdt9w9A) — 微信公众号「硅基铁匠」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "配音",
+            "语音"
+          ]
         }
       ],
       "subCategories": []
@@ -1345,7 +1405,7 @@
       "id": "1786157700253",
       "title": "优选开源站",
       "icon": "FolderKanban",
-      "description": "教育相关优质开源项目集",
+      "description": "教育相关优质开源项目：题库、AI 代理工作流与编程工具包等",
       "enabled": true,
       "items": [
         {
@@ -1358,6 +1418,34 @@
           "icon": "/assets/favicon_1785757541673.png",
           "useDefaultIcon": false,
           "enabled": true
+        },
+        {
+          "id": "item-1789300000005",
+          "title": "Paperclip",
+          "href": "https://github.com/paperclipai/paperclip",
+          "description": "多 AI 代理任务面板：分配工作、看进度、设预算与审批，适合已有 Agent 工作流者。",
+          "longDescription": "## 简介\n**Paperclip** 提供服务端与网页界面，把多个 AI 代理的任务、目标、审批和费用记录放进同一管理面板，减少在多个聊天窗口来回翻找。\n\n## 核心能力\n- 接入自有代理并分配任务\n- 进度、预算与审批记录\n- 适合“资料整理 + 写稿 + 检查”等多代理协作\n\n## 教师怎么用\n已有自动化教研/内容流水线时可试；偶尔问一句 AI 的人通常用不上整套系统。\n\n## 使用提示\n需自行部署维护；模型与算力仍有成本，预算控制不保证输出正确。对外发消息、改文件等权限要自己配置。\n\n---\n\n### 参考文献与版权声明\n1. [Paperclip](https://github.com/paperclipai/paperclip) — GitHub 官方仓库\n2. [6个开源工具：做PPT、配音、画图，按需替代](https://mp.weixin.qq.com/s/MYfSvT2AFlJgq-4vdt9w9A) — 微信公众号「硅基铁匠」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "AI代理"
+          ]
+        },
+        {
+          "id": "item-1789300000006",
+          "title": "ECC",
+          "href": "https://github.com/affaan-m/ECC",
+          "description": "给 AI 编程工具加载的可复用工作流包：规划、测试、审查、Skills 与安全检查。",
+          "longDescription": "## 简介\n**ECC** 把规划、测试、代码审查、记忆、Skills 和安全检查等放进工具包，供 Claude Code、Cursor 等 AI 编程环境加载，减少每次重复交代流程。\n\n## 核心能力\n- 可复用开发工作流与规则\n- 主要面向 Claude Code，也有 Codex/Cursor 等适配路径\n- 降低“先读项目再写代码再测”的重复提示成本\n\n## 教师怎么用\n信息科技教师或校本开源维护者，可按需接入部分规则；不必一次装全。\n\n## 使用提示\nECC 不附赠模型额度；安全检查≠安全认证。安装插件/钩子前看清会读哪些文件、执行哪些操作；官方仓库与付费托管服务须区分。\n\n---\n\n### 参考文献与版权声明\n1. [ECC](https://github.com/affaan-m/ECC) — GitHub 官方仓库\n2. [6个开源工具：做PPT、配音、画图，按需替代](https://mp.weixin.qq.com/s/MYfSvT2AFlJgq-4vdt9w9A) — 微信公众号「硅基铁匠」（工具发现来源）\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "AI编程"
+          ]
         }
       ],
       "subCategories": []
