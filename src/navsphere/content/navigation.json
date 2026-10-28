@@ -375,6 +375,118 @@
             "地理",
             "可视化"
           ]
+        },
+        {
+          "id": "item-1789400000001",
+          "title": "山河人机 · 中国行政区划拼图",
+          "href": "https://china-puzzle-00354814-1257902869.cos-website.ap-chengdu.myqcloud.com/human-0903e.html",
+          "description": "中国省级行政区拖拽拼图，支持学习与人机对战，适合地理课认省与电子白板互动。",
+          "longDescription": "## 简介\n**山河人机**是中国行政区划互动拼图页：把省份拖到正确位置完成拼合，支持悬停/长按显示省名，并提供学习模式与人机对战，覆盖三十二个省级行政区。\n\n## 核心能力\n- 拖动归位的省级拼图练习\n- 低 / 中 / 高难度（轮廓提示强弱不同）\n- 单人学习与左右分屏人机对战，适合电子白板两侧操作\n\n## 教师怎么用\n区域地理导入或复习时投屏，先让学生拖拽归位再对照教材表述；也可组织小组限时挑战，强化位置记忆。\n\n## 使用提示\n页面托管于腾讯云 COS 静态站点；课前请测试触控/投影与网络。设计署名 lizl3000。\n\n---\n\n### 参考文献与版权声明\n1. [山河人机 · 中国行政区划人机拼图](https://china-puzzle-00354814-1257902869.cos-website.ap-chengdu.myqcloud.com/human-0903e.html) — 在线拼图页\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=china-puzzle-00354814-1257902869.cos-website.ap-chengdu.myqcloud.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "地理",
+            "互动"
+          ]
+        },
+        {
+          "id": "item-1789400000002",
+          "title": "地理视界 Geography Lens",
+          "href": "https://www.geographylens.com/index.html",
+          "description": "中学地理 3D 交互演示合集：天文地球、区域地理、大气、地形、水文与土壤等课堂可视化。",
+          "longDescription": "## 简介\n**地理视界（Geography Lens）**面向中学地理教学，汇聚天文与地球、区域地理、大气、地形、水文、土壤等主题的 3D/交互演示与计算工具，适合投屏讲解与学生自主探究。\n\n## 核心能力\n- 地球运动、月相、太阳系等天文—地球主题 3D 演示\n- 中国/世界区域认知、经纬网、教学地图与在线高清地图\n- 热力环流、锋面、等高线、水循环、洋流等专题交互\n\n## 教师怎么用\n按课标章节选用对应演示（如热力环流、等高线判读），先演示再提问；复杂 3D 场景课前预加载，避免课堂卡顿。\n\n## 使用提示\n站点含大量 WebGL/3D 内容，建议用较新浏览器与稳定网络；课堂以课标与教材表述为准，演示作辅助。\n\n---\n\n### 参考文献与版权声明\n1. [地理视界](https://www.geographylens.com/index.html) — 官方站点\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=www.geographylens.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "地理",
+            "3D"
+          ]
+        },
+        {
+          "id": "item-1789400000003",
+          "title": "WeduLab 教学工具集",
+          "href": "https://wedulab.com/?lang=zh-CN",
+          "description": "免费交互式教学实验合集，覆盖物理、化学、生物、数学、地理，打开即用适合投屏与探究。",
+          "longDescription": "## 简介\n**WeduLab**是面向课堂的交互式教学工具合集：打开即用、无需安装，覆盖物理、化学、生物、数学、地理等多学科实验与模型，适合投屏演示与学生自主探究。官方标明免费使用，未授权商业应用。\n\n## 核心能力\n- 多学科交互实验（如电路、等高线、热力环流、细胞结构、元素周期律、立体几何等）\n- 中文等语言界面，浏览器即可运行\n- 适合初高中知识点可视化\n\n## 教师怎么用\n实验课前或概念课导入时选用对应实验；可与 PhET、NOBOOK 等互补，按本校网络择优。\n\n## 使用提示\n主站 [wedulab.com](https://wedulab.com/)；国内亦可尝试镜像路径 `hwx1.gzweidu.top/tool/wedulab/`（根路径工具集合页当前可能不可用，以实际访问为准）。请遵守站点使用条款。\n\n---\n\n### 参考文献与版权声明\n1. [WeduLab](https://wedulab.com/?lang=zh-CN) — 官方站点\n2. [WeduLab 镜像入口（参考）](https://hwx1.gzweidu.top/tool/wedulab/?lang=zh-CN) — 第三方/镜像路径\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=wedulab.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "理科",
+            "虚拟实验"
+          ]
+        },
+        {
+          "id": "item-1789400000004",
+          "title": "WorldWide Telescope",
+          "href": "https://worldwidetelescope.org/",
+          "description": "浏览器虚拟望远镜：漫游星空与太阳系，切换多波段天文图像，适合天文科普导入。",
+          "longDescription": "## 简介\n**WorldWide Telescope（全球望远镜）**可在浏览器中漫游星空、太阳系与部分行星表面，并切换不同波段的天文图像；官方亦提供教育者导览，降低新手上手成本。\n\n## 核心能力\n- 浏览器端宇宙漫游与天体查看\n- 多波段图像切换\n- 导览/导览式探索（视版本）\n\n## 教师怎么用\n地理“地球在宇宙中的位置”、跨学科天文社团课可投屏导览；引导学生对比不同波段看到的差异。\n\n## 使用提示\nWeb 版依赖网络与设备性能；部分专业功能以桌面版更完整。国内访问请提前测试。\n\n---\n\n### 参考文献与版权声明\n1. [WorldWide Telescope](https://worldwidetelescope.org/) — 官方站点\n2. [5个少见但上头的免费天文网站](https://mp.weixin.qq.com/s/woJYqxMfhJgkx5hNx9u3_w) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=worldwidetelescope.org",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "天文",
+            "地理"
+          ]
+        },
+        {
+          "id": "item-1789400000005",
+          "title": "OpenSpace",
+          "href": "https://www.openspaceproject.com/",
+          "description": "免费开源宇宙可视化软件，可按真实时间线回放部分 NASA/ESA 航天任务。",
+          "longDescription": "## 简介\n**OpenSpace**是免费开源的宇宙可视化软件，可从地球看到太阳系、银河系等更大尺度，并能按真实时间线回放部分 NASA、ESA 任务轨迹（如阿波罗、旅行者等，以软件数据为准）。\n\n## 核心能力\n- 多尺度宇宙可视化\n- 航天任务时间线回放\n- 开源、可本地安装\n\n## 教师怎么用\n天文社团或跨学科项目用其展示探测器轨道与任务节点；课前录屏更稳妥，避免课堂现场调参耗时。\n\n## 使用提示\n非轻量网页：官方对硬件有一定要求（内存与显卡），性能一般电脑可不优先选用。以官网下载与系统要求为准。\n\n---\n\n### 参考文献与版权声明\n1. [OpenSpace](https://www.openspaceproject.com/) — 官方项目站\n2. [5个少见但上头的免费天文网站](https://mp.weixin.qq.com/s/woJYqxMfhJgkx5hNx9u3_w) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=www.openspaceproject.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "天文",
+            "开源"
+          ]
+        },
+        {
+          "id": "item-1789400000006",
+          "title": "Stellarium Web",
+          "href": "https://stellarium-web.org/",
+          "description": "网页版星空模拟：拖动天空、搜索天体与星座，适合查今夜可见天象。",
+          "longDescription": "## 简介\n**Stellarium Web**是基于 Stellarium 的网页天文馆：可拖动天空、搜索天体、查看星座与行星位置，适合快速查询“今晚头顶有什么”。\n\n## 核心能力\n- 浏览器星空模拟与天体搜索\n- 星座、行星位置可视化\n- 无需安装即可临时查星空\n\n## 教师怎么用\n布置观察作业前先用网页版演示方位与高度；认真观测可推荐桌面版 Stellarium。\n\n## 使用提示\n官方曾标为 Beta，偶发兼容问题不奇怪；以 [stellarium-web.org](https://stellarium-web.org/) 当前状态为准。\n\n---\n\n### 参考文献与版权声明\n1. [Stellarium Web](https://stellarium-web.org/) — 网页版入口\n2. [5个少见但上头的免费天文网站](https://mp.weixin.qq.com/s/woJYqxMfhJgkx5hNx9u3_w) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=stellarium-web.org",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "天文",
+            "地理"
+          ]
+        },
+        {
+          "id": "item-1789400000007",
+          "title": "Heavens-Above",
+          "href": "https://www.heavens-above.com/",
+          "description": "按观察地点查询 ISS、Starlink 等卫星过境时间、方向与亮度。",
+          "longDescription": "## 简介\n**Heavens-Above**解决“今晚几点抬头”：设置观察地点后，可查询国际空间站、Starlink 等卫星过境时间、方向、亮度与轨迹，并提供 Live Sky 等实时可见性参考。\n\n## 核心能力\n- 卫星过境预报\n- 按地点定制观测计划\n- 适合天文社团与地理实践作业\n\n## 教师怎么用\n组织观星/观 ISS 活动前查过境窗口；强调轨道会变化，出门前应再次核对。\n\n## 使用提示\n界面偏旧但功能扎实；登录非必须。预报有时效性，勿拿过期预测当绝对准确。\n\n---\n\n### 参考文献与版权声明\n1. [Heavens-Above](https://www.heavens-above.com/) — 官方站点\n2. [5个少见但上头的免费天文网站](https://mp.weixin.qq.com/s/woJYqxMfhJgkx5hNx9u3_w) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=www.heavens-above.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "天文",
+            "卫星"
+          ]
+        },
+        {
+          "id": "item-1789400000008",
+          "title": "ESASky",
+          "href": "https://sky.esa.int/",
+          "description": "欧洲航天局在线天文数据平台，可搜索公开成像、目录与光谱并下载。",
+          "longDescription": "## 简介\n**ESASky**是欧洲航天局（ESA）的在线天文数据平台：可按天体名称或坐标搜索目标，查看公开成像、目录与光谱数据，并支持下载，接近“查宇宙资料”而非单纯观赏。\n\n## 核心能力\n- ESA 公开观测数据检索\n- 成像 / 目录 / 光谱浏览与下载\n- 提供中文等界面（专业术语仍多）\n\n## 教师怎么用\n搜仙女座星系、土星等让学生看真实观测结果；适合兴趣课或研究性学习资料入口。\n\n## 使用提示\n界面偏专业，首次使用可先跟教师演示搜索路径；网络与数据量较大时注意课堂时间。\n\n---\n\n### 参考文献与版权声明\n1. [ESASky](https://sky.esa.int/) — 欧洲航天局\n2. [5个少见但上头的免费天文网站](https://mp.weixin.qq.com/s/woJYqxMfhJgkx5hNx9u3_w) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=sky.esa.int",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "天文",
+            "数据"
+          ]
         }
       ],
       "subCategories": []
@@ -492,6 +604,76 @@
               "useDefaultIcon": true,
               "enabled": true,
               "tags": []
+            },
+            {
+              "id": "item-1789400000009",
+              "title": "PyBasic",
+              "href": "https://pybasic.com/",
+              "description": "浏览器内从零学 Python：模块化课程与大量互动练习，免注册即可动手写代码。",
+              "longDescription": "## 简介\n**PyBasic**把 Python 课程拆成数十个模块，从变量、循环、函数到文件、正则、面向对象、装饰器与测试等，知识点旁即可在浏览器写代码练习；公开介绍称有大量互动练习，不注册也能开始。\n\n## 核心能力\n- 浏览器运行 Python，免装环境\n- 结构化模块 + 即时练习\n- 适合语法打基础\n\n## 教师怎么用\n信息科技/编程社团零基础入门可布置对应模块；强调“看懂≠会写”，以练习完成度为准。\n\n## 使用提示\n课程语言主要为英文；定位是基础语法与练习，不是“学完即开发者”。\n\n---\n\n### 参考文献与版权声明\n1. [PyBasic](https://pybasic.com/) — 官方站点\n2. [5个少见又好用的免费学习网站](https://mp.weixin.qq.com/s/XP8NXY5e7Asvsg6MMmvshw) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+              "icon": "https://www.google.com/s2/favicons?sz=128&domain=pybasic.com",
+              "useDefaultIcon": true,
+              "enabled": true,
+              "tags": [
+                "编程",
+                "Python"
+              ]
+            },
+            {
+              "id": "item-1789400000010",
+              "title": "Terminal Learning",
+              "href": "https://terminallearning.dev/",
+              "description": "互动终端学命令行，可选 Linux / macOS / Windows，进度可保存在本地。",
+              "longDescription": "## 简介\n**Terminal Learning**用互动终端练命令行：可选择 Linux、macOS 或 Windows，练习与提示随系统环境变化；公开介绍含多模块课程与单元测试，免注册可开始，进度可本地保存。\n\n## 核心能力\n- 分系统环境的命令行互动练习\n- 模块化课程与测试反馈\n- 适合 Windows 用户补齐命令行基础\n\n## 教师怎么用\n信息科技课“命令行入门”单元可选用；与真实终端操作对照，避免只会网页里敲。\n\n## 使用提示\n项目仍在发展中，勿当成终极性教材库；以站点当前模块为准。\n\n---\n\n### 参考文献与版权声明\n1. [Terminal Learning](https://terminallearning.dev/) — 官方站点\n2. [5个少见又好用的免费学习网站](https://mp.weixin.qq.com/s/XP8NXY5e7Asvsg6MMmvshw) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+              "icon": "https://www.google.com/s2/favicons?sz=128&domain=terminallearning.dev",
+              "useDefaultIcon": true,
+              "enabled": true,
+              "tags": [
+                "编程",
+                "命令行"
+              ]
+            },
+            {
+              "id": "item-1789400000011",
+              "title": "Vibe Engines",
+              "href": "https://vibeengines.com/",
+              "description": "免费 AI 工程学习站：手册、系统设计、算法、实验与挑战，强调动手搭系统。",
+              "longDescription": "## 简介\n**Vibe Engines**把 AI 工程拆成 handbook、系统设计、算法、实验、挑战与互动项目等路径，公开介绍称无账号、无付费墙，内容免费，侧重“系统怎么搭起来”而非只讲概念。\n\n## 核心能力\n- 大量学习单元与可运行练习（以站点为准）\n- AI 工程 / 系统设计导向\n- 完全免费路径明确\n\n## 教师怎么用\n适合已有一定编程基础的社团或教师研修；建议选一条路径深挖，勿从头硬啃全部。\n\n## 使用提示\n信息量大、偏进阶；零基础请先学完 Python/SQL 等基础站。\n\n---\n\n### 参考文献与版权声明\n1. [Vibe Engines](https://vibeengines.com/) — 官方站点\n2. [5个少见又好用的免费学习网站](https://mp.weixin.qq.com/s/XP8NXY5e7Asvsg6MMmvshw) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+              "icon": "https://www.google.com/s2/favicons?sz=128&domain=vibeengines.com",
+              "useDefaultIcon": true,
+              "enabled": true,
+              "tags": [
+                "AI",
+                "编程"
+              ]
+            },
+            {
+              "id": "item-1789400000012",
+              "title": "Open Learn",
+              "href": "https://open-learn.app/",
+              "description": "轻量互动课程平台：整理结构化内容并在浏览器中学习，偏个人组织学习。",
+              "longDescription": "## 简介\n**Open Learn**更接近“自己组织学习内容的互动课程平台”：把结构化内容整理成课程，在浏览器中学习与练习，适合个人深度学习而非替代完整学校课程体系。\n\n## 核心能力\n- 结构化课程组织与互动学习\n- 轻量化、免费导向\n- 适合自学与小众主题整理\n\n## 教师怎么用\n可作为教师个人知识库/微课组织工具试用；校本正式课程仍以学校平台为准。\n\n## 使用提示\n相对新、小众，成熟度与资源量不及大型平台。\n\n---\n\n### 参考文献与版权声明\n1. [Open Learn](https://open-learn.app/) — 官方站点\n2. [5个少见又好用的免费学习网站](https://mp.weixin.qq.com/s/XP8NXY5e7Asvsg6MMmvshw) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+              "icon": "https://www.google.com/s2/favicons?sz=128&domain=open-learn.app",
+              "useDefaultIcon": true,
+              "enabled": true,
+              "tags": [
+                "学习",
+                "课程"
+              ]
+            },
+            {
+              "id": "item-1789400000013",
+              "title": "SQLBolt",
+              "href": "https://sqlbolt.com/",
+              "description": "互动学 SQL：每课讲解后立即写查询看结果，适合数据库入门与复习。",
+              "longDescription": "## 简介\n**SQLBolt**以“讲一点、马上练”的方式学习 SQL：从 SELECT、筛选排序，到 JOIN、聚合，再到建表与改表结构，均配有互动练习，适合第一次接触数据库或重温基础。\n\n## 核心能力\n- 分课互动 SQL 练习\n- 即时查询反馈\n- 建立通用 SQL 思维\n\n## 教师怎么用\n信息科技/数据分析社团可按课推进；提醒不同数据库语法有差异，工作中仍需查对应文档。\n\n## 使用提示\n定位通用 SQL 入门，非某一厂商认证教程。\n\n---\n\n### 参考文献与版权声明\n1. [SQLBolt](https://sqlbolt.com/) — 官方站点\n2. [5个少见又好用的免费学习网站](https://mp.weixin.qq.com/s/XP8NXY5e7Asvsg6MMmvshw) — 微信公众号「人间随机录」（发现来源）\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+              "icon": "https://www.google.com/s2/favicons?sz=128&domain=sqlbolt.com",
+              "useDefaultIcon": true,
+              "enabled": true,
+              "tags": [
+                "编程",
+                "SQL"
+              ]
             }
           ]
         },
