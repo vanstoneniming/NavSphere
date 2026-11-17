@@ -1375,6 +1375,23 @@
             "流程图",
             "AI"
           ]
+        },
+        {
+          "id": "item-1794900000001",
+          "title": "教辅转 Word/PPT",
+          "href": "https://github.com/vanstoneniming/workbook-to-docx-pptx",
+          "description": "AI Skill：把中文习题册/目标检测转成可编辑 Word 试题册与一题一页讲评 PPT，优先 md/文本层，避免逐页 OCR。",
+          "longDescription": "## 简介\n**教辅转 Word/PPT**（`workbook-to-docx-pptx`）是一套面向中文教辅的转换技能与命令行工具：把习题册、目标检测、单元卷整理成两份成品——分章分节的 **Word 试题册**，以及 16:9、**一题一页 + 答案页** 的投屏讲评 **PPT**，并标注原书页码与题号。\n\n## 核心能力\n- Word：保留插图、表格、填空下划线，题侧标原书页码，每节末集中参考答案\n- PPT：每节先出知识网络页，再按「题 → 答」翻页讲评，适合课堂投屏\n- 优先走 **MinerU markdown** 或 **有文本层 PDF**（约两分钟一册），纯图片 PDF 才退回逐页转写\n- 内置版式硬规则：选项另起行、填空括号不断行、材料楷体/题干宋体等\n\n## 教师怎么用\n备讲评课时，把《学习目标与检测》一类教辅先转成 md 或确认 PDF 有文本层，改好配置后一条命令生成 Word/PPT，再人工抽查双栏卡片与选项排版。适合初中物理、地理等国内教辅排版。\n\n## 使用提示\n需本机 Python、poppler 等依赖；**教材内容版权归原出版方**，不要把 PDF/生成件提交到公开仓库或二次分发。代码 MIT。也可作为 Cursor / Agent Skill（`SKILL.md`）加载使用。\n\n---\n\n### 参考文献与版权声明\n1. [workbook-to-docx-pptx](https://github.com/vanstoneniming/workbook-to-docx-pptx) — GitHub 官方仓库\n2. [项目 README（简体中文）](https://github.com/vanstoneniming/workbook-to-docx-pptx/blob/main/README.md) — 用法与版式说明\n\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。开源项目以仓库 LICENSE 为准；模型调用、算力与第三方数据可能另计费用。引用如有更新，以官方仓库与文档为准。",
+          "icon": "https://www.google.com/s2/favicons?sz=128&domain=github.com",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "开源",
+            "Skill",
+            "Word",
+            "PPT",
+            "教辅"
+          ]
         }
       ],
       "subCategories": []
