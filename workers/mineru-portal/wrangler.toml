@@ -12,7 +12,7 @@ port = 8787
 
 [vars]
 # 允许调用 API 的前端来源，逗号分隔
-ALLOWED_ORIGINS = "http://localhost:3000,https://nav.newkit.site"
+ALLOWED_ORIGINS = "http://localhost:3000,https://nav.newkit.site,https://www.zhijiaoyunzhan.com,https://zhijiaoyunzhan.com"
 # MinerU 精准解析 API 地址（官方服务）
 MINERU_API_BASE = "https://mineru.net"
 # 门户自身的限制。Worker 请求体上限通常为 100MB，超过请改走 Cloudflare 付费计划/独立服务
