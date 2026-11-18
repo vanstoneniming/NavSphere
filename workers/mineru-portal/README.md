@@ -7,13 +7,13 @@
 ## 组成
 
 ```
-NavSphere (Cloudflare Pages)
+NavSphere (Vercel / Cloudflare Pages)
   └── /mineru                 前端：登录、上传、任务列表、Markdown 预览、管理后台
         │  HTTPS + Bearer JWT
         ▼
 Cloudflare Worker: mineru-portal
-  ├── D1        用户、邀请码、任务、配额
-  ├── R2        解析结果 ZIP、Markdown、图片、DOCX/HTML
+  ├── D1        用户、邀请码、任务、MinerU 的 full_zip_url
+  ├── 按需读取  MinerU CDN 结果 ZIP（预览 / 单文件下载）
   └── 调用 https://mineru.net/api/v4/...（Token 只存在 Worker 密钥中）
 ```
 
@@ -22,7 +22,7 @@ Cloudflare Worker: mineru-portal
 - 账号体系：邀请码注册；首个账号用 `BOOTSTRAP_INVITE` 注册为管理员
 - 用户额度：默认每人每天 20 次，可在管理后台单独调整
 - 文件限制：门户默认 100MB（Cloudflare Worker 请求体限制）/ 200 页
-- 结果保留：ZIP、Markdown、图片、DOCX、HTML 存在 R2；建议给 bucket 配置 30 天生命周期
+- 结果不落库：D1 只记录 MinerU 的 `full_zip_url`；ZIP 直接下载，预览/单文件按需读取；不使用 R2。
 
 ## 本地联调（不消耗真实 Token）
 
@@ -81,11 +81,10 @@ npx wrangler login
 npx wrangler whoami
 ```
 
-### 2. 创建 D1 和 R2
+### 2. 创建 D1
 
 ```bash
 npx wrangler d1 create mineru-portal
-npx wrangler r2 bucket create mineru-results
 ```
 
 把 `d1 create` 输出里的 `database_id` 填到 `workers/mineru-portal/wrangler.toml`：
@@ -185,7 +184,7 @@ pnpm mineru:typecheck    # Worker 类型检查
 - **单文件大小**：门户默认 100MB，因为 Cloudflare Worker 的请求体上限通常是 100MB。MinerU 官方接口本身支持 200MB；如果必须支持 200MB，需要把门户后端放到独立服务器，或使用更高等级的 Workers 套餐。
 - **页数**：官方精准接口上限 200 页/文件；每个账号每天 1000 页最高优先级额度，超出后排队变慢。
 - **并发与额度**：MinerU 账号级额度，多个用户共享；管理后台的每日次数是门户自己的限制。
-- **结果保留**：建议给 `mineru-results` 配置 30 天生命周期规则；D1 里的任务记录会保留，但结果过期后无法下载。
+- **结果链接**：门户不保存结果文件；ZIP 下载直接使用 MinerU 的 `full_zip_url`，预览/单文件按需读取。MinerU 链接过期后需要重新解析。旧的 `mineru-results` bucket 可以删除。
 - **Token 安全**：Token 只放在 Worker 密钥中，前端永远拿不到；不要把它写进 `.env.local` 后提交到仓库。MinerU 账号目前通常需要手机号/验证码登录，Token 在「API 管理」页面创建；如果账号无法登录，可改用免 Token 的 Agent 接口或自建 MinerU。
 - **账号安全**：密码使用 PBKDF2-SHA256（10 万次迭代）存储；生产环境建议使用 Workers Paid（$5/月），免费版 10ms CPU 限制可能在密码哈希或大文件解压时不够。
 - **服务条款**：请遵守 MinerU 官方 API 的使用条款；不要把它包装成公开的匿名服务。邀请制、配额和日志是必要的。
@@ -194,9 +193,11 @@ pnpm mineru:typecheck    # Worker 类型检查
 ## 文件流向与存储
 
 - **上传不经过 R2**：浏览器把文件发给 Worker，Worker 以流式方式转发到 MinerU 返回的阿里云 OSS 签名上传地址。Worker 只在 D1 记录文件名、大小、状态和临时签名地址，上传完成后清掉签名地址。
-- **解析结果存在 R2**：MinerU 完成后，Worker 把结果 ZIP 下载到 R2 的 `tasks/{id}/result.zip`，并解压出 `markdown.md`、`images/`、`document.docx`、`document.html`。
-- **原始文件副本**：MinerU 的结果 ZIP 通常包含一个 `*_origin.pdf`（原始 PDF 副本），所以 R2 里的 `result.zip` 也会包含原始文件。如果不想保留，可以修改 `ingestTask`，在写 R2 前剔除 `*_origin.pdf`，或只保存解析产物、不保存 ZIP。
-- **D1 只存元数据**：账号、邀请码、任务状态和 R2 key；不存文件内容。
+- **解析结果不存 R2**：MinerU 完成后，D1 只记录 `zip_url`（MinerU 的 `full_zip_url`）。ZIP 下载直接跳转到 MinerU 链接；Markdown/Word/HTML 和站内预览由 Worker 在请求时从该 ZIP 读取，不写入任何持久存储。
+- **原始文件副本**：MinerU 的结果 ZIP 自带一份 `*_origin.pdf`。因为 ZIP 是直接下载，浏览器拿到的就是 MinerU 原始结果包（含这份副本）；门户自身不保存、也不修改它。如果不需要这份副本，可以在下载后自行删除，或改为自建 MinerU。
+- **D1 只存元数据**：账号、邀请码、任务状态和 MinerU `zip_url`；不存文件内容。
+- **R2 不再使用**：`wrangler.toml` 里的 R2 绑定已注释；之前创建的 `mineru-results` bucket 可以直接删除。
+- **大文件预览**：MinerU CDN 不支持 Range 时，预览需要整包读取；门户对超过 30MB 的 ZIP 不生成站内预览，请直接下载 ZIP。ZIP 直链没有 30MB 限制。
 - 文件会经过 MinerU 云端处理；涉密或敏感材料不要使用。
 
 ## 故障排查
@@ -209,19 +210,19 @@ pnpm mineru:typecheck    # Worker 类型检查
 | 上传报 413 | 文件超过 100MB；换小文件或改独立后端 |
 | 页面提示「服务地址未配置」 | 没有设置 `NEXT_PUBLIC_MINERU_API_BASE`，或设置后没有重新构建 Pages |
 | 上传报 CORS | 把前端域名加入 `wrangler.toml` 的 `ALLOWED_ORIGINS` |
-| 结果一直「整理结果」 | 大 ZIP 下载慢；点任务详情的「重新整理」，或直接下载 ZIP |
-| 图片不显示 | 检查结果 ZIP 里是否有 `images/`；确认 R2 绑定正确 |
+| 大文件没有站内预览 | 结果包超过 30MB 或 CDN 不支持分段读取；直接点 ZIP 下载 |
+| 图片不显示 | 仅较小文件支持站内预览；检查 MinerU 链接是否过期，或直接下载 ZIP |
+| ZIP 下载包含原始文件 | 这是 MinerU 原始结果包；门户不存储也不修改它 |
 
 ## 目录
 
 ```
 workers/mineru-portal/
 ├── src/
-│   ├── index.ts     # Hono 路由、任务生命周期、ZIP 整理
+│   ├── index.ts     # Hono 路由、任务生命周期、按需读取 MinerU ZIP
 │   ├── auth.ts      # PBKDF2、JWT、限流
 │   ├── db.ts        # D1 查询
 │   ├── mineru.ts    # MinerU v4 精准 API 客户端
-│   ├── zip.ts       # 流式 ZIP 解压
 │   ├── types.ts
 │   └── utils.ts
 ├── schema.sql

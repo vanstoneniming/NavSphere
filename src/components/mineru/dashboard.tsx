@@ -25,6 +25,7 @@ import {
   ApiRequestError,
   formatBytes,
   formatDate,
+  triggerBrowserDownload,
   uploadTask,
   type MineruHealth,
   type MineruTask,
@@ -72,6 +73,7 @@ export function MineruDashboard({ user, today, onAuthLost, onRefreshMe }: Dashbo
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [downloadingZipId, setDownloadingZipId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const maxMb = health?.limits.maxFileMb ?? 100;
@@ -174,10 +176,20 @@ export function MineruDashboard({ user, today, onAuthLost, onRefreshMe }: Dashbo
   };
 
   const downloadZip = async (task: MineruTask) => {
+    if (downloadingZipId) return;
+    setDownloadingZipId(task.id);
     try {
-      await api.downloadTask(task.id, 'zip', `${task.filename.replace(/\.[^.]+$/, '')}.zip`);
+      const result = await api.getDownloadUrl(task.id, 'zip');
+      triggerBrowserDownload(result.url);
+      toast({ title: '下载已开始', description: '浏览器下载栏会显示进度。' });
     } catch (err) {
-      handleApiError(err);
+      if (err instanceof ApiRequestError && (err.status === 401 || err.status === 403)) {
+        onAuthLost();
+      } else {
+        toast({ title: '下载失败', description: err instanceof Error ? err.message : '请稍后重试' });
+      }
+    } finally {
+      window.setTimeout(() => setDownloadingZipId(null), 2500);
     }
   };
 
@@ -403,9 +415,18 @@ export function MineruDashboard({ user, today, onAuthLost, onRefreshMe }: Dashbo
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
                     {task.downloads.zip ? (
-                      <Button variant="outline" size="sm" onClick={() => void downloadZip(task)}>
-                        <Download className="mr-1 h-4 w-4" />
-                        ZIP
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={downloadingZipId === task.id}
+                        onClick={() => void downloadZip(task)}
+                      >
+                        {downloadingZipId === task.id ? (
+                          <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+                        ) : (
+                          <Download className="mr-1 h-4 w-4" />
+                        )}
+                        {downloadingZipId === task.id ? '打包中…' : 'ZIP'}
                       </Button>
                     ) : null}
                     <Button asChild variant="secondary" size="sm">

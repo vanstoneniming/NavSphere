@@ -25,9 +25,12 @@ binding = "DB"
 database_name = "mineru-portal"
 database_id = "a0aa61b2-b055-479e-ac40-f90488b3b3e5"
 
-[[r2_buckets]]
-binding = "RESULTS"
-bucket_name = "mineru-results"
+# 结果不再写入 R2：Worker 只记录 MinerU 的 full_zip_url，
+# 预览和下载都按需从 MinerU 的 ZIP 读取，避免在 R2 保存原始文件或大 ZIP。
+# 如果以后想缓存结果，再取消下面的注释并创建 bucket。
+# [[r2_buckets]]
+# binding = "RESULTS"
+# bucket_name = "mineru-results"
 
 [observability]
 enabled = true

@@ -1,6 +1,5 @@
 export interface Bindings {
   DB: D1Database;
-  RESULTS: R2Bucket;
   MINERU_API_TOKEN?: string;
   JWT_SECRET?: string;
   BOOTSTRAP_INVITE?: string;

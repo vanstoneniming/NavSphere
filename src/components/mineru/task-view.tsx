@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
-import { api, ApiRequestError, formatBytes, formatDate, type MineruTask } from '@/lib/mineru-api';
+import { api, ApiRequestError, formatBytes, formatDate, triggerBrowserDownload, type MineruTask } from '@/lib/mineru-api';
 import { isActiveStatus, StatusBadge, TaskProgress } from '@/components/mineru/status';
 import { MarkdownView } from '@/components/mineru/markdown-view';
 
@@ -28,6 +28,7 @@ export function MineruTaskView({ taskId, onAuthLost }: { taskId: string; onAuthL
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState('preview');
   const [copied, setCopied] = useState(false);
+  const [downloading, setDownloading] = useState<string | null>(null);
   const markdownLoaded = useRef(false);
   const markdownLoading = useRef(false);
 
@@ -84,13 +85,20 @@ export function MineruTaskView({ taskId, onAuthLost }: { taskId: string; onAuthL
   }, [loadTask, task]);
 
   const download = async (type: 'md' | 'zip' | 'docx' | 'html') => {
-    if (!task) return;
-    const base = task.filename.replace(/\.[^.]+$/, '');
-    const ext = type === 'md' ? 'md' : type;
+    if (!task || downloading) return;
+    setDownloading(type);
     try {
-      await api.downloadTask(task.id, type, `${base}.${ext}`);
+      const result = await api.getDownloadUrl(task.id, type);
+      triggerBrowserDownload(result.url);
+      toast({ title: '下载已开始', description: '浏览器下载栏会显示进度。' });
     } catch (err) {
-      handleApiError(err);
+      if (err instanceof ApiRequestError && (err.status === 401 || err.status === 403)) {
+        onAuthLost();
+      } else {
+        toast({ title: '下载失败', description: err instanceof Error ? err.message : '请稍后重试' });
+      }
+    } finally {
+      window.setTimeout(() => setDownloading(null), type === 'zip' ? 2500 : 1000);
     }
   };
 
@@ -150,27 +158,63 @@ export function MineruTaskView({ taskId, onAuthLost }: { taskId: string; onAuthL
         </Button>
         <div className="flex flex-wrap items-center gap-2">
           {task.downloads.markdown ? (
-            <Button variant="outline" size="sm" onClick={() => void download('md')}>
-              <Download className="mr-1 h-4 w-4" />
-              Markdown
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={downloading === 'md'}
+              onClick={() => void download('md')}
+            >
+              {downloading === 'md' ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="mr-1 h-4 w-4" />
+              )}
+              {downloading === 'md' ? '准备中…' : 'Markdown'}
             </Button>
           ) : null}
           {task.downloads.docx ? (
-            <Button variant="outline" size="sm" onClick={() => void download('docx')}>
-              <Download className="mr-1 h-4 w-4" />
-              Word
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={downloading === 'docx'}
+              onClick={() => void download('docx')}
+            >
+              {downloading === 'docx' ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="mr-1 h-4 w-4" />
+              )}
+              {downloading === 'docx' ? '准备中…' : 'Word'}
             </Button>
           ) : null}
           {task.downloads.html ? (
-            <Button variant="outline" size="sm" onClick={() => void download('html')}>
-              <Download className="mr-1 h-4 w-4" />
-              HTML
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={downloading === 'html'}
+              onClick={() => void download('html')}
+            >
+              {downloading === 'html' ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="mr-1 h-4 w-4" />
+              )}
+              {downloading === 'html' ? '准备中…' : 'HTML'}
             </Button>
           ) : null}
           {task.downloads.zip ? (
-            <Button variant="outline" size="sm" onClick={() => void download('zip')}>
-              <Download className="mr-1 h-4 w-4" />
-              ZIP
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={downloading === 'zip'}
+              onClick={() => void download('zip')}
+            >
+              {downloading === 'zip' ? (
+                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="mr-1 h-4 w-4" />
+              )}
+              {downloading === 'zip' ? '打包中…' : 'ZIP'}
             </Button>
           ) : null}
         </div>
@@ -237,6 +281,11 @@ export function MineruTaskView({ taskId, onAuthLost }: { taskId: string; onAuthL
               <Loader2 className="h-6 w-6 animate-spin text-primary" />
               {task.status === 'ingesting' ? '正在下载并整理解析结果…' : 'MinerU 正在解析文档，请稍候…'}
               <span className="text-xs">可以离开页面，稍后回来查看。</span>
+            </div>
+          ) : task.status === 'ready' || task.status === 'ready_download_only' ? (
+            <div className="rounded-lg border border-dashed py-12 text-center text-sm text-muted-foreground">
+              <p>结果较大，站内暂不生成在线预览。</p>
+              <p className="mt-1">请使用上方的 ZIP 按钮直接下载 MinerU 结果。</p>
             </div>
           ) : task.status === 'failed' ? (
             <div className="rounded-lg border border-dashed py-12 text-center text-sm text-muted-foreground">

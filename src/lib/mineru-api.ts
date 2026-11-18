@@ -188,29 +188,14 @@ export const api = {
     return request(`/api/tasks/${encodeURIComponent(id)}/retry`, { method: 'POST' });
   },
 
-  async downloadTask(id: string, type: 'md' | 'zip' | 'docx' | 'html', fallbackName: string): Promise<void> {
-    if (!API_BASE) throw new ApiRequestError('还没有配置 MinerU 服务地址', 0);
-    const token = getToken();
-    const response = await fetch(`${API_BASE}/api/tasks/${encodeURIComponent(id)}/download?type=${type}`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
+  getDownloadUrl(
+    id: string,
+    type: 'md' | 'zip' | 'docx' | 'html',
+  ): Promise<{ url: string; filename: string; expiresAt: number }> {
+    return request(`/api/tasks/${encodeURIComponent(id)}/download-url`, {
+      method: 'POST',
+      body: JSON.stringify({ type }),
     });
-    if (!response.ok) {
-      let message = `下载失败（${response.status}）`;
-      try {
-        const payload = await response.json();
-        message = payload?.error || message;
-      } catch {}
-      throw new ApiRequestError(message, response.status);
-    }
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = fallbackName;
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    URL.revokeObjectURL(url);
   },
 
   adminStats(): Promise<{ users: number; tasks: number; ready: number; active: number }> {
@@ -247,6 +232,16 @@ export const api = {
     return request('/api/admin/tasks?limit=100');
   },
 };
+
+export function triggerBrowserDownload(url: string): void {
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.rel = 'noopener';
+  anchor.style.display = 'none';
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+}
 
 export function uploadTask(
   taskId: string,

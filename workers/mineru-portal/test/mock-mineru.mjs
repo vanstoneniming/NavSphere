@@ -70,9 +70,31 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (req.method === 'GET' && url.pathname === '/result.zip') {
-    res.writeHead(200, { 'Content-Type': 'application/zip', 'Content-Length': zip.length });
-    res.end(zip);
+  if ((req.method === 'GET' || req.method === 'HEAD') && url.pathname === '/result.zip') {
+    const range = req.headers.range;
+    if (range) {
+      const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+      const start = match && match[1] ? Number(match[1]) : 0;
+      const end = match && match[2] ? Number(match[2]) : zip.length - 1;
+      const safeEnd = Math.min(end, zip.length - 1);
+      const chunk = zip.subarray(start, safeEnd + 1);
+      res.writeHead(206, {
+        'Content-Type': 'application/zip',
+        'Accept-Ranges': 'bytes',
+        'Content-Range': `bytes ${start}-${safeEnd}/${zip.length}`,
+        'Content-Length': chunk.length,
+      });
+      if (req.method === 'HEAD') res.end();
+      else res.end(chunk);
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'application/zip',
+        'Accept-Ranges': 'bytes',
+        'Content-Length': zip.length,
+      });
+      if (req.method === 'HEAD') res.end();
+      else res.end(zip);
+    }
     return;
   }
 

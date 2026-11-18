@@ -27,14 +27,13 @@ import {
 } from './auth';
 import * as db from './db';
 import { createBatchUpload, friendlyMineruError, getBatchResult, MinerUError, uploadToSignedUrl } from './mineru';
-import { extractZipData } from './zip';
+import { HttpReader, Uint8ArrayReader, Uint8ArrayWriter, ZipReader } from '@zip.js/zip.js';
 
 type App = Hono<{ Bindings: Bindings; Variables: Variables }>;
 
 const app: App = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
-const ACTIVE_STATUSES = new Set(['uploading', 'queued', 'parsing', 'ingesting']);
-const inFlightIngests = new Set<string>();
+const ACTIVE_STATUSES = new Set(['uploading', 'queued', 'parsing']);
 
 app.use('*', async (c, next) => {
   await next();
@@ -131,6 +130,135 @@ function baseName(filename: string): string {
   return filename.replace(/\.[^.]+$/, '') || 'document';
 }
 
+function requestOrigin(c: any): string {
+  const host = c.req.header('host');
+  if (host) {
+    const local = host.startsWith('localhost') || host.startsWith('127.0.0.1');
+    const proto = c.req.header('x-forwarded-proto') || (local ? 'http' : 'https');
+    return `${proto}://${host}`;
+  }
+  return new URL(c.req.url).origin;
+}
+
+async function readZipEntry(
+  zipUrl: string,
+  matcher: (name: string) => boolean,
+  maxBytes = 30 * 1024 * 1024,
+): Promise<{ name: string; data: Uint8Array } | null> {
+  const pick = async (reader: ZipReader<unknown>) => {
+    const entries = await reader.getEntries();
+    const entry = entries.find(
+      (item) => !item.directory && matcher(item.filename.replace(/\\/g, '/')),
+    );
+    if (!entry) return null;
+    return {
+      name: entry.filename,
+      data: await (entry as any).getData(new Uint8ArrayWriter()),
+    };
+  };
+
+  let ranged: ZipReader<unknown> | null = null;
+  try {
+    ranged = new ZipReader(
+      new HttpReader(zipUrl, { useRangeHeader: true, forceRangeRequests: true }),
+    );
+    return await pick(ranged);
+  } catch (rangeError) {
+    // 某些 CDN/本地 mock 不支持 Range 时，退化为整包下载；限制 30MB 防止打爆 Worker 内存。
+    const response = await fetch(zipUrl, { signal: AbortSignal.timeout(120_000) });
+    if (!response.ok) throw new ApiError(502, `读取 MinerU 结果失败（HTTP ${response.status}）`);
+    const buffer = await response.arrayBuffer();
+    if (buffer.byteLength > maxBytes) {
+      throw new ApiError(
+        413,
+        `MinerU 结果包超过 ${Math.round(maxBytes / 1024 / 1024)}MB，且该 CDN 不支持分段读取`,
+      );
+    }
+    const fallback = new ZipReader(new Uint8ArrayReader(new Uint8Array(buffer)));
+    try {
+      return await pick(fallback);
+    } finally {
+      await fallback.close();
+    }
+  } finally {
+    if (ranged) await ranged.close();
+  }
+}
+
+async function readMarkdown(zipUrl: string): Promise<string | null> {
+  const entry = await readZipEntry(
+    zipUrl,
+    (name) => name.toLowerCase().endsWith('.md') && !name.includes('/'),
+  );
+  return entry ? new TextDecoder().decode(entry.data) : null;
+}
+
+async function readAsset(zipUrl: string, path: string): Promise<Uint8Array | null> {
+  const exact = await readZipEntry(zipUrl, (name) => name === path);
+  if (exact) return exact.data;
+  const basename = path.split('/').pop();
+  if (basename) {
+    const fallback = await readZipEntry(zipUrl, (name) => name === `images/${basename}`);
+    if (fallback) return fallback.data;
+  }
+  return null;
+}
+
+async function serveDownload(c: any, task: TaskRow, type: string): Promise<Response> {
+  const map: Record<string, { ext: string; contentType: string }> = {
+    md: { ext: '.md', contentType: 'text/markdown; charset=utf-8' },
+    zip: { ext: '.zip', contentType: 'application/zip' },
+    docx: {
+      ext: '.docx',
+      contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    },
+    html: { ext: '.html', contentType: 'text/html; charset=utf-8' },
+  };
+  const item = map[type];
+  if (!item) throw new ApiError(400, '不支持的下载类型');
+  if (!task.zip_url) throw new ApiError(404, 'MinerU 结果链接不存在');
+  const filename = `${baseName(task.filename)}${item.ext}`;
+
+  // ZIP 直接使用 MinerU 的下载链接，不在 Worker 重新打包。
+  if (type === 'zip') {
+    if (!task.zip_url) throw new ApiError(404, 'MinerU 结果链接不存在');
+    return new Response(null, { status: 302, headers: { Location: task.zip_url } });
+  }
+
+  let data: Uint8Array | null = null;
+  if (type === 'md') {
+    const entry = await readZipEntry(
+      task.zip_url,
+      (name) => name.toLowerCase().endsWith('.md') && !name.includes('/'),
+      80 * 1024 * 1024,
+    );
+    data = entry?.data ?? null;
+  } else if (type === 'docx') {
+    const entry = await readZipEntry(
+      task.zip_url,
+      (name) => name.toLowerCase().endsWith('.docx'),
+      80 * 1024 * 1024,
+    );
+    data = entry?.data ?? null;
+  } else {
+    const entry = await readZipEntry(
+      task.zip_url,
+      (name) => name.toLowerCase().endsWith('.html') && !name.includes('/'),
+      80 * 1024 * 1024,
+    );
+    data = entry?.data ?? null;
+  }
+
+  if (!data) throw new ApiError(404, '该格式的结果不存在');
+  return new Response(data, {
+    headers: {
+      'Content-Type': item.contentType,
+      'Content-Disposition': contentDisposition(filename),
+      'Cache-Control': 'private, no-store',
+    },
+  });
+}
+
 function assetTokenSignature(secret: string, taskId: string, exp: number): Promise<string> {
   return hmacSha256Hex(secret, `${taskId}:${exp}`);
 }
@@ -182,7 +310,7 @@ async function refreshTask(env: Bindings, task: TaskRow): Promise<TaskRow> {
         status = 'parsing';
         break;
       case 'done':
-        status = 'ingesting';
+        status = 'ready';
         break;
       case 'failed':
         status = 'failed';
@@ -201,7 +329,8 @@ async function refreshTask(env: Bindings, task: TaskRow): Promise<TaskRow> {
     };
     if (result.zipUrl) patch.zip_url = result.zipUrl;
     if (result.state === 'done') {
-      patch.status = task.md_key ? 'ready' : 'ingesting';
+      patch.status = 'ready';
+      patch.finished_at = now();
     }
     if (result.state === 'failed') patch.finished_at = now();
     await db.updateTask(env.DB, task.id, patch);
@@ -215,127 +344,6 @@ async function refreshTask(env: Bindings, task: TaskRow): Promise<TaskRow> {
       last_checked: now(),
     });
     return { ...task, error: message };
-  }
-}
-
-async function ingestTask(env: Bindings, taskId: string, zipUrl: string): Promise<void> {
-  if (inFlightIngests.has(taskId)) return;
-  inFlightIngests.add(taskId);
-  try {
-    const task = await db.getTask(env.DB, taskId);
-    if (!task || task.md_key) return;
-
-    await db.updateTask(env.DB, taskId, {
-      status: 'ingesting',
-      ingest_started_at: now(),
-      error: null,
-    });
-
-    let object = task.zip_key ? await env.RESULTS.get(task.zip_key) : null;
-
-    if (!object) {
-      const response = await fetch(zipUrl, { signal: AbortSignal.timeout(300_000) });
-      if (!response.ok || !response.body) {
-        throw new Error(`下载解析结果失败（HTTP ${response.status}）`);
-      }
-
-      const zipKey = `tasks/${taskId}/result.zip`;
-      await env.RESULTS.put(zipKey, response.body, {
-        httpMetadata: { contentType: 'application/zip' },
-      });
-      await db.updateTask(env.DB, taskId, { zip_key: zipKey });
-      object = await env.RESULTS.get(zipKey);
-    }
-
-    if (!object) throw new Error('结果压缩包读取失败');
-    if (object.size > 30 * 1024 * 1024) {
-      throw new Error('结果包超过 30MB，已保留 ZIP 下载，暂不生成在线预览');
-    }
-    const entries = extractZipData(await object.arrayBuffer());
-
-    let markdownKey: string | null = null;
-    let markdownSize = 0;
-    let docxKey: string | null = null;
-    let htmlKey: string | null = null;
-
-    for (const entry of entries) {
-      const name = entry.name.replace(/\\/g, '/');
-      const lower = name.toLowerCase();
-
-      if (lower.endsWith('.md') && !lower.includes('/')) {
-        // 4.x 叫 markdown.md，旧版叫 full.md；取最大的一个作为正文
-        if (entry.size >= markdownSize) {
-          markdownSize = entry.size;
-          markdownKey = `tasks/${taskId}/markdown.md`;
-          await env.RESULTS.put(markdownKey, entry.data, {
-            httpMetadata: { contentType: 'text/markdown; charset=utf-8' },
-          });
-        }
-        continue;
-      }
-
-      if (lower.startsWith('images/')) {
-        await env.RESULTS.put(`tasks/${taskId}/assets/${name}`, entry.data, {
-          httpMetadata: { contentType: contentTypeFor(name) },
-        });
-        continue;
-      }
-
-      if (lower.endsWith('.docx') && entry.size < 30 * 1024 * 1024) {
-        docxKey = `tasks/${taskId}/document.docx`;
-        await env.RESULTS.put(docxKey, entry.data, {
-          httpMetadata: { contentType: contentTypeFor('document.docx') },
-        });
-        continue;
-      }
-
-      if (lower.endsWith('.html') && !lower.includes('/') && entry.size < 30 * 1024 * 1024) {
-        htmlKey = `tasks/${taskId}/document.html`;
-        await env.RESULTS.put(htmlKey, entry.data, {
-          httpMetadata: { contentType: 'text/html; charset=utf-8' },
-        });
-      }
-    }
-
-    if (!markdownKey) throw new Error('结果包里没有找到 Markdown 文件');
-
-    await db.updateTask(env.DB, taskId, {
-      status: 'ready',
-      md_key: markdownKey,
-      docx_key: docxKey,
-      html_key: htmlKey,
-      error: null,
-      finished_at: now(),
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : '结果整理失败';
-    const task = await db.getTask(env.DB, taskId);
-    if (task?.zip_key) {
-      await db.updateTask(env.DB, taskId, {
-        status: 'ready_download_only',
-        error: `预览整理失败：${message}。可直接下载 ZIP 结果。`,
-        finished_at: now(),
-      });
-    } else {
-      await db.updateTask(env.DB, taskId, {
-        status: 'failed',
-        error: message,
-        finished_at: now(),
-      });
-    }
-  } finally {
-    inFlightIngests.delete(taskId);
-  }
-}
-
-function triggerIngest(c: any, task: TaskRow): void {
-  if (!task.zip_url || task.md_key) return;
-  if (task.ingest_started_at && now() - task.ingest_started_at < 60_000) return;
-  const promise = ingestTask(c.env, task.id, task.zip_url);
-  try {
-    c.executionCtx.waitUntil(promise);
-  } catch {
-    void promise;
   }
 }
 
@@ -567,9 +575,6 @@ app.get('/api/tasks', requireAuth, async (c) => {
   if (refreshable.length > 0) {
     await Promise.all(refreshable.map((task) => refreshTask(c.env, task)));
     tasks = await db.listTasks(c.env.DB, user.id, limit, offset);
-    for (const task of tasks) {
-      if (task.status === 'ingesting' && !task.md_key && task.zip_url) triggerIngest(c, task);
-    }
   }
 
   return c.json({ tasks: tasks.map(publicTask) });
@@ -582,22 +587,18 @@ app.get('/api/tasks/:id', requireAuth, async (c) => {
       task = await refreshTask(c.env, task);
     }
   }
-  if (task.status === 'ingesting' && !task.md_key && task.zip_url) {
-    triggerIngest(c, task);
-  }
   return c.json({ task: publicTask(task) });
 });
 
 app.get('/api/tasks/:id/markdown', requireAuth, async (c) => {
   const task = await ownedTask(c, taskIdParam(c));
-  if (!task.md_key) throw new ApiError(404, 'Markdown 结果还没有准备好');
-  const object = await c.env.RESULTS.get(task.md_key);
-  if (!object) throw new ApiError(404, '结果已过期或不存在');
-  const markdown = await object.text();
+  if (!task.zip_url) throw new ApiError(404, 'MinerU 结果链接不存在');
+  const markdown = await readMarkdown(task.zip_url);
+  if (!markdown) throw new ApiError(404, '结果包里没有 Markdown 文件');
   const secret = requireSecret(c.env);
   const exp = Math.floor(Date.now() / 1000) + 3600;
   const sig = await assetTokenSignature(secret, task.id, exp);
-  const origin = new URL(c.req.url).origin;
+  const origin = requestOrigin(c);
   return c.json({
     markdown: rewriteMarkdownAssets(markdown, origin, task.id, exp, sig),
     expiresAt: exp * 1000,
@@ -623,15 +624,12 @@ app.get('/api/tasks/:id/assets/*', async (c) => {
   const expected = await assetTokenSignature(c.env.JWT_SECRET, taskId, exp);
   if (!timingSafeEqual(expected, sig)) return c.json({ error: '资源链接无效' }, 403);
 
-  const key = `tasks/${taskId}/assets/${path}`;
-  let object = await c.env.RESULTS.get(key);
-  if (!object) {
-    const name = path.split('/').pop() || '';
-    object = await c.env.RESULTS.get(`tasks/${taskId}/assets/images/${name}`);
-  }
-  if (!object) return c.json({ error: '资源不存在' }, 404);
+  const task = await db.getTask(c.env.DB, taskId);
+  if (!task || !task.zip_url) return c.json({ error: '资源不存在' }, 404);
+  const data = await readAsset(task.zip_url, path);
+  if (!data) return c.json({ error: '资源不存在' }, 404);
 
-  return new Response(object.body, {
+  return new Response(data, {
     headers: {
       'Content-Type': contentTypeFor(path),
       'Cache-Control': 'private, max-age=3600',
@@ -642,62 +640,66 @@ app.get('/api/tasks/:id/assets/*', async (c) => {
 
 app.get('/api/tasks/:id/download', requireAuth, async (c) => {
   const task = await ownedTask(c, taskIdParam(c));
-  const type = String(c.req.query('type') || 'md');
-  const map: Record<string, { key: string | null; ext: string; contentType: string }> = {
-    md: { key: task.md_key, ext: '.md', contentType: 'text/markdown; charset=utf-8' },
-    zip: { key: task.zip_key, ext: '.zip', contentType: 'application/zip' },
-    docx: {
-      key: task.docx_key,
-      ext: '.docx',
-      contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    },
-    html: { key: task.html_key, ext: '.html', contentType: 'text/html; charset=utf-8' },
-  };
-  const item = map[type];
-  if (!item) throw new ApiError(400, '不支持的下载类型');
+  return serveDownload(c, task, String(c.req.query('type') || 'md'));
+});
 
-  if (!item.key && type === 'zip' && task.zip_url) {
-    return c.redirect(task.zip_url, 302);
+app.post('/api/tasks/:id/download-url', requireAuth, async (c) => {
+  const task = await ownedTask(c, taskIdParam(c));
+  const body = await c.req.json().catch(() => ({}));
+  const type = String(body.type || 'md');
+  if (!['md', 'zip', 'docx', 'html'].includes(type)) {
+    throw new ApiError(400, '不支持的下载类型');
   }
-  if (!item.key) throw new ApiError(404, '该格式的结果不存在');
-  const object = await c.env.RESULTS.get(item.key);
-  if (!object) throw new ApiError(404, '结果已过期或不存在');
-
-  return new Response(object.body, {
-    headers: {
-      'Content-Type': item.contentType,
-      'Content-Disposition': contentDisposition(`${baseName(task.filename)}${item.ext}`),
-      'Cache-Control': 'private, no-store',
-    },
+  if (type === 'zip') {
+    if (!task.zip_url) throw new ApiError(404, 'MinerU 结果链接不存在');
+    return c.json({
+      url: task.zip_url,
+      filename: `${baseName(task.filename)}.zip`,
+      expiresAt: 0,
+    });
+  }
+  const secret = requireSecret(c.env);
+  const exp = Math.floor(Date.now() / 1000) + 600;
+  const sig = await hmacSha256Hex(secret, `${task.id}:${type}:${exp}`);
+  const ext = type === 'md' ? '.md' : type === 'zip' ? '.zip' : type === 'docx' ? '.docx' : '.html';
+  const origin = requestOrigin(c);
+  return c.json({
+    url: `${origin}/api/download/${task.id}/${type}?exp=${exp}&sig=${sig}`,
+    filename: `${baseName(task.filename)}${ext}`,
+    expiresAt: exp * 1000,
   });
+});
+
+// 签名直链：浏览器直接下载，避免前端把大文件读进内存。
+app.get('/api/download/:id/:type', async (c) => {
+  const id = c.req.param('id');
+  const type = c.req.param('type');
+  const exp = Number(c.req.query('exp'));
+  const sig = String(c.req.query('sig') || '');
+  if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) {
+    throw new ApiError(403, '下载链接已过期');
+  }
+  const secret = requireSecret(c.env);
+  const expected = await hmacSha256Hex(secret, `${id}:${type}:${exp}`);
+  if (!timingSafeEqual(expected, sig)) throw new ApiError(403, '下载链接无效');
+  const task = await db.getTask(c.env.DB, id);
+  if (!task) throw new ApiError(404, '任务不存在');
+  return serveDownload(c, task, type);
 });
 
 app.post('/api/tasks/:id/retry', requireAuth, async (c) => {
   const task = await ownedTask(c, taskIdParam(c));
-  if (!task.zip_url) throw new ApiError(400, '这个任务没有可重试的结果包');
   await db.updateTask(c.env.DB, task.id, {
-    status: 'ingesting',
-    md_key: null,
-    docx_key: null,
-    html_key: null,
+    status: 'parsing',
     error: null,
-    ingest_started_at: null,
+    last_checked: 0,
     finished_at: null,
   });
-  triggerIngest(c, { ...task, md_key: null, ingest_started_at: null });
   return c.json({ ok: true });
 });
 
 app.delete('/api/tasks/:id', requireAuth, async (c) => {
   const task = await ownedTask(c, taskIdParam(c));
-  let cursor: string | undefined;
-  const prefix = `tasks/${task.id}/`;
-  do {
-    const listed = await c.env.RESULTS.list({ prefix, limit: 1000, cursor });
-    const keys = listed.objects.map((item) => item.key);
-    if (keys.length > 0) await c.env.RESULTS.delete(keys);
-    cursor = listed.truncated ? listed.cursor : undefined;
-  } while (cursor);
   await db.deleteTaskRow(c.env.DB, task.id);
   return c.json({ ok: true });
 });
@@ -713,7 +715,7 @@ app.get('/api/admin/stats', async (c) => {
     db.countUsers(c.env.DB),
     db.countTasks(c.env.DB),
     c.env.DB.prepare("SELECT COUNT(*) AS n FROM tasks WHERE status = 'ready'").first<{ n: number }>(),
-    c.env.DB.prepare("SELECT COUNT(*) AS n FROM tasks WHERE status IN ('uploading','queued','parsing','ingesting')").first<{ n: number }>(),
+    c.env.DB.prepare("SELECT COUNT(*) AS n FROM tasks WHERE status IN ('uploading','queued','parsing')").first<{ n: number }>(),
   ]);
   return c.json({
     users,

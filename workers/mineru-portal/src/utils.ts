@@ -100,10 +100,10 @@ export function publicTask(task: TaskRow): PublicTask {
     finishedAt: task.finished_at,
     progress: parseProgress(task),
     downloads: {
-      markdown: Boolean(task.md_key),
-      zip: Boolean(task.zip_key),
-      docx: Boolean(task.docx_key),
-      html: Boolean(task.html_key),
+      markdown: Boolean(task.md_key || task.zip_url),
+      zip: Boolean(task.zip_key || task.zip_url),
+      docx: Boolean(task.docx_key || task.zip_url),
+      html: Boolean(task.html_key || task.zip_url),
     },
   };
 }
