@@ -1,0 +1,38 @@
+# MinerU 国内门户 - Cloudflare Worker
+#
+# 部署前先把 database_id 换成 `wrangler d1 create mineru-portal` 返回的 id。
+# R2 bucket 需要先创建：`wrangler r2 bucket create mineru-results`。
+name = "mineru-portal"
+main = "src/index.ts"
+compatibility_date = "2026-01-24"
+workers_dev = true
+
+[dev]
+port = 8787
+
+[vars]
+# 允许调用 API 的前端来源，逗号分隔
+ALLOWED_ORIGINS = "http://localhost:3000,https://nav.newkit.site"
+# MinerU 精准解析 API 地址（官方服务）
+MINERU_API_BASE = "https://mineru.net"
+# 门户自身的限制。Worker 请求体上限通常为 100MB，超过请改走 Cloudflare 付费计划/独立服务
+MAX_FILE_MB = "100"
+MAX_PAGES = "200"
+DEFAULT_DAILY_LIMIT = "20"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mineru-portal"
+database_id = "a0aa61b2-b055-479e-ac40-f90488b3b3e5"
+
+[[r2_buckets]]
+binding = "RESULTS"
+bucket_name = "mineru-results"
+
+[observability]
+enabled = true
+
+# 绑定自定义域名（zhijiaoyunzhan.com 在当前 Cloudflare 账号下）
+[[routes]]
+pattern = "mineru-api.zhijiaoyunzhan.com"
+custom_domain = true

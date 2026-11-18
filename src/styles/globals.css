@@ -278,3 +278,176 @@
     @apply px-4;
   }
 }
+
+/* --------------------------------------------------------------------------
+   MinerU 结果预览排版
+   -------------------------------------------------------------------------- */
+.mineru-markdown {
+  color: hsl(var(--foreground));
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.mineru-markdown > :first-child {
+  margin-top: 0;
+}
+
+.mineru-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.mineru-markdown h1,
+.mineru-markdown h2,
+.mineru-markdown h3,
+.mineru-markdown h4,
+.mineru-markdown h5,
+.mineru-markdown h6 {
+  margin: 1.6em 0 0.6em;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.mineru-markdown h1 {
+  font-size: 1.75rem;
+}
+
+.mineru-markdown h2 {
+  font-size: 1.375rem;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.mineru-markdown h3 {
+  font-size: 1.125rem;
+}
+
+.mineru-markdown p {
+  margin: 0.9em 0;
+}
+
+.mineru-markdown a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mineru-markdown ul,
+.mineru-markdown ol {
+  margin: 0.9em 0;
+  padding-left: 1.5em;
+}
+
+.mineru-markdown ul {
+  list-style: disc;
+}
+
+.mineru-markdown ol {
+  list-style: decimal;
+}
+
+.mineru-markdown li {
+  margin: 0.3em 0;
+}
+
+.mineru-markdown li > ul,
+.mineru-markdown li > ol {
+  margin: 0.2em 0;
+}
+
+.mineru-markdown blockquote {
+  margin: 1em 0;
+  padding: 0.2em 1em;
+  border-left: 3px solid hsl(var(--primary) / 0.45);
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--muted) / 0.4);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.mineru-markdown hr {
+  margin: 2em 0;
+  border: 0;
+  border-top: 1px solid hsl(var(--border));
+}
+
+.mineru-markdown table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.1em 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.mineru-markdown thead {
+  background: hsl(var(--muted));
+}
+
+.mineru-markdown th,
+.mineru-markdown td {
+  border: 1px solid hsl(var(--border));
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.mineru-markdown th {
+  font-weight: 600;
+}
+
+.mineru-markdown tr:nth-child(even) td {
+  background: hsl(var(--muted) / 0.25);
+}
+
+.mineru-markdown code {
+  padding: 0.15em 0.35em;
+  border-radius: 0.3rem;
+  background: hsl(var(--muted));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.875em;
+}
+
+.mineru-markdown pre {
+  margin: 1.1em 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 0.6rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted) / 0.55);
+  line-height: 1.6;
+}
+
+.mineru-markdown pre code {
+  padding: 0;
+  background: transparent;
+  font-size: 0.8125rem;
+}
+
+.mineru-markdown img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.1em auto;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--border));
+}
+
+.mineru-markdown .katex-display {
+  margin: 1em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+.mineru-markdown strong {
+  font-weight: 600;
+}
+
+.mineru-markdown mark {
+  background: hsl(48 96% 70% / 0.55);
+  color: inherit;
+  padding: 0 0.15em;
+  border-radius: 0.2rem;
+}

@@ -54,3 +54,11 @@ build/cache/
 
 # 每日摘要输出（不入库，避免触发 Vercel 重建）
 digests/
+
+# MinerU 门户本地开发
+workers/mineru-portal/.dev.vars
+workers/mineru-portal/.wrangler/
+workers/mineru-portal/test/tmp/
+
+# Claude Code 本地配置
+/.claude/
