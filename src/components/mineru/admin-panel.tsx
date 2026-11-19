@@ -177,7 +177,7 @@ export function MineruAdminPanel({ onAuthLost }: AdminPanelProps) {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base">生成邀请码</CardTitle>
-              <CardDescription>用户凭邀请码注册；可以限制使用次数和有效期。</CardDescription>
+              <CardDescription>用户凭邀请码注册；生成后可把邀请码配置到公众号【智教云栈】的「MinerU邀请码」自动回复。</CardDescription>
             </CardHeader>
             <CardContent>
               <form className="grid gap-3 sm:grid-cols-[120px_120px_1fr_auto] sm:items-end" onSubmit={createInvite}>

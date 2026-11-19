@@ -66,7 +66,14 @@ export function MineruShell({ user, today, onLogout, children }: MineruShellProp
       <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:py-10">{children}</main>
 
       <footer className="mx-auto max-w-6xl px-4 pb-8 text-center text-xs text-muted-foreground">
-        解析能力由 MinerU 官方精准解析 API 提供 · 单文件 ≤100MB、≤200 页 · 请勿上传涉密或敏感文件
+        <p>解析能力由 MinerU 官方精准解析 API 提供 · 单文件 ≤100MB、≤200 页 · 请勿上传涉密或敏感文件</p>
+        <p className="mt-1">
+          邀请码：关注公众号
+          <span className="mx-1 font-medium text-foreground">【智教云栈】</span>
+          ，后台回复
+          <span className="mx-1 font-medium text-foreground">「MinerU邀请码」</span>
+          自动获取
+        </p>
       </footer>
     </div>
   );

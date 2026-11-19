@@ -176,11 +176,13 @@ export function AuthPanel({ onLogin, onRegister, error }: AuthPanelProps) {
                     placeholder="例如 MNRU-XXXX-XXXX"
                     autoComplete="off"
                   />
-                  <p className="text-xs text-muted-foreground">
-                    邀请码由管理员在「管理」页面生成；首次部署请使用环境变量
-                    <code className="mx-1 rounded bg-muted px-1">BOOTSTRAP_INVITE</code>
-                    中的管理员邀请码。
-                  </p>
+                  <div className="rounded-md bg-muted/60 px-3 py-2 text-xs leading-5 text-muted-foreground">
+                    还没有邀请码？关注公众号
+                    <span className="mx-1 font-medium text-foreground">【智教云栈】</span>
+                    ，在后台回复
+                    <span className="mx-1 font-medium text-foreground">「MinerU邀请码」</span>
+                    自动获取。
+                  </div>
                 </div>
                 {localError || error ? (
                   <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">

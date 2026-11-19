@@ -1436,6 +1436,23 @@
           ]
         },
         {
+          "id": "item-1794900000101",
+          "title": "MinerU 文档解析",
+          "href": "https://www.zhijiaoyunzhan.com/mineru",
+          "description": "在线把 PDF、扫描件、Office 文档解析为 Markdown/Word/HTML，支持公式、表格与图片，注册后保留解析记录。",
+          "longDescription": "## 简介\n**MinerU 文档解析**是面向教师的在线文档解析门户，基于 MinerU 官方精准解析 API，把 PDF、扫描件和 Office 文档转换成可检索、可编辑的 Markdown，并可导出 Word、HTML 和 ZIP。\n\n## 核心能力\n- 复杂版式、表格、公式与图片识别\n- 解析结果在线预览，保留历史记录\n- Markdown / Word / HTML / ZIP 下载\n- 邀请码注册，账号与任务隔离\n\n## 使用方式\n1. 打开 [MinerU 文档解析](https://www.zhijiaoyunzhan.com/mineru)\n2. 关注公众号【智教云栈】，在后台回复「MinerU邀请码」自动获取邀请码\n3. 注册登录后上传 PDF、图片或 Office 文档\n\n## 使用提示\n- 单文件 ≤100MB、≤200 页\n- 扫描版 PDF 请勾选 OCR\n- 大文件站内预览可能不可用，请直接下载 ZIP\n- 文档会上传到 MinerU 云端，请勿上传涉密或敏感材料\n\n---\n\n### 参考文献与版权声明\n1. [MinerU 官网](https://mineru.net/) — 官方站点\n2. [MinerU GitHub](https://github.com/opendatalab/MinerU) — 开源项目\n\n> 本页介绍由**智教云站**编辑整理，系对公开资料的综述转述，非原文照搬；相关商标、产品名称及原创内容版权归各权利人所有。AI 生成内容请教师自行核验后用于教学。引用如有更新，以官方网站与最新公开资料为准。",
+          "icon": "",
+          "useDefaultIcon": true,
+          "enabled": true,
+          "tags": [
+            "MinerU",
+            "文档解析",
+            "PDF",
+            "OCR",
+            "Markdown"
+          ]
+        },
+        {
           "id": "item-1789500000001",
           "title": "pudone! 在线工具集",
           "href": "https://pudone.com/",

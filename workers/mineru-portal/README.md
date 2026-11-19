@@ -19,7 +19,7 @@ Cloudflare Worker: mineru-portal
 
 - 前端：`src/app/mineru/`、`src/components/mineru/`、`src/lib/mineru-api.ts`
 - 后端：`workers/mineru-portal/`
-- 账号体系：邀请码注册；首个账号用 `BOOTSTRAP_INVITE` 注册为管理员
+- 账号体系：邀请码注册；首个账号用 `BOOTSTRAP_INVITE` 注册为管理员；用户邀请码通过公众号【智教云栈】回复「MinerU邀请码」获取
 - 用户额度：默认每人每天 20 次，可在管理后台单独调整
 - 文件限制：门户默认 100MB（Cloudflare Worker 请求体限制）/ 200 页
 - 结果不落库：D1 只记录 MinerU 的 `full_zip_url`；ZIP 直接下载，预览/单文件按需读取；不使用 R2。
@@ -144,13 +144,13 @@ custom_domain = true
 
 ### 6. 配置前端
 
-在 Cloudflare Pages 项目（navsphere）的 Settings → Environment variables 中添加：
+在 Vercel（或 Cloudflare Pages）项目的 Settings → Environment variables 中添加：
 
 ```
 NEXT_PUBLIC_MINERU_API_BASE = https://mineru-api.zhijiaoyunzhan.com
 ```
 
-如果暂时没有自定义域名，就填 Worker 的 `workers.dev` 地址。注意 `NEXT_PUBLIC_*` 是构建时变量，改完要重新部署 Pages。前端也内置了 `https://mineru-api.zhijiaoyunzhan.com` 作为生产环境默认值，因此不配置也能工作。
+如果暂时没有自定义域名，就填 Worker 的 `workers.dev` 地址。注意 `NEXT_PUBLIC_*` 是构建时变量，改完要重新部署 Vercel / Pages。前端也内置了 `https://mineru-api.zhijiaoyunzhan.com` 作为生产环境默认值，因此不配置也能工作。
 
 本地开发用 `.env.local`：
 
@@ -163,10 +163,12 @@ NEXT_PUBLIC_MINERU_API_BASE=http://localhost:8787
 部署完成后打开：
 
 ```
-https://nav.newkit.site/mineru
+https://www.zhijiaoyunzhan.com/mineru
 ```
 
-用 `BOOTSTRAP_INVITE` 的值注册第一个账号，它会成为管理员。之后进入「管理后台」生成邀请码，把邀请码发给用户即可。
+用 `BOOTSTRAP_INVITE` 的值注册第一个账号，它会成为管理员。之后进入「管理后台」生成邀请码。
+
+生成邀请码后，把它配置到公众号【智教云栈】的自动回复关键词「MinerU邀请码」；注册页和页脚会提示用户关注公众号获取。`BOOTSTRAP_INVITE` 只用于首次创建管理员，不要公开。
 
 ## 常用命令
 
