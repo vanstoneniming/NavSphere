@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>智学工坊 · 课程视频加工 / 教辅数字化 / 试题加工整理</title>
+  <meta name="description" content="课程视频转写、字幕、切片、题库生成；教辅扫描件转 Word 和投屏 PPT；试题/题库录入、结构化、清洗，交付 Excel/JSON/API。客户提供源文件，版权归客户。" />
+  <style>
+    :root {
+      --ink: #16201d;
+      --ink-soft: #2b3733;
+      --paper: #f7f3e9;
+      --paper-2: #efe8d9;
+      --line: #d8d0bf;
+      --muted: #6b7168;
+      --teal: #0f6b5b;
+      --teal-deep: #0a4a3f;
+      --teal-wash: #dceee7;
+      --amber: #b96e22;
+      --amber-wash: #f4e4ce;
+      --white: #fffdf8;
+      --shadow: 0 18px 50px rgba(22, 32, 29, 0.08);
+      --radius: 18px;
+      --serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "STSong", Georgia, serif;
+      --sans: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+      --mono: "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(15, 107, 91, 0.08), transparent 28rem),
+        radial-gradient(circle at 88% 18%, rgba(185, 110, 34, 0.08), transparent 24rem),
+        var(--paper);
+      font-family: var(--sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    /* header */
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(247, 243, 233, 0.86);
+      border-bottom: 1px solid rgba(216, 208, 191, 0.7);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: 0.02em; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: grid; place-items: center;
+      background: var(--teal); color: var(--white);
+      font-family: var(--serif); font-size: 19px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16);
+    }
+    .brand small { display: block; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); font-weight: 600; }
+    .nav-links { display: flex; gap: 26px; font-size: 14px; color: var(--ink-soft); }
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: ""; position: absolute; left: 0; bottom: -6px;
+      width: 0; height: 1px; background: var(--teal); transition: width .2s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 999px;
+      background: var(--ink); color: var(--white);
+      font-size: 13px; font-weight: 600;
+      border: 1px solid var(--ink);
+    }
+    .nav-cta:hover { background: var(--teal-deep); border-color: var(--teal-deep); }
+
+    /* hero */
+    .hero { padding: 84px 0 56px; }
+    .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 56px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: .16em;
+      color: var(--teal); text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--teal); }
+    h1 {
+      margin: 0 0 24px;
+      font-family: var(--serif);
+      font-size: clamp(34px, 8vw, 76px);
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    h1 .accent {
+      color: var(--teal);
+      background: linear-gradient(transparent 68%, var(--teal-wash) 68%);
+      padding: 0 4px;
+      white-space: nowrap;
+    }
+    .lede { max-width: 560px; font-size: 17px; color: var(--ink-soft); margin: 0 0 30px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 13px 21px; border-radius: 12px;
+      font-size: 14px; font-weight: 650;
+      border: 1px solid transparent; cursor: pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--teal); color: var(--white); }
+    .btn-primary:hover { background: var(--teal-deep); }
+    .btn-ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+    .btn-ghost:hover { border-color: var(--ink); }
+    .hero-note { margin-top: 24px; font-size: 12px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+    .hero-note span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); display: inline-block; }
+    .tracks {
+      margin-top: 38px; padding-top: 18px; border-top: 1px solid var(--line);
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    }
+    .tracks a {
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
+      background: rgba(255, 253, 248, 0.5); font-size: 13px; font-weight: 700;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .tracks a:hover { border-color: var(--teal); background: var(--white); }
+    .tracks a span { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+    /* hero visual */
+    .workbench {
+      position: relative;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transform: rotate(1.2deg);
+    }
+    .workbench::before {
+      content: ""; position: absolute; inset: 12px -12px -12px 12px;
+      border: 1px solid rgba(15,107,91,.18); border-radius: 24px; z-index: -1;
+    }
+    .wb-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+    .wb-title { font-size: 12px; letter-spacing: .14em; color: var(--muted); font-weight: 700; white-space: nowrap; }
+    .wb-badge { font-size: 11px; padding: 4px 9px; border-radius: 999px; background: var(--teal-wash); color: var(--teal-deep); font-weight: 700; white-space: nowrap; }
+    .wb-row {
+      display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center;
+      padding: 12px 0; border-top: 1px dashed var(--line);
+    }
+    .wb-row:first-of-type { border-top: 0; }
+    .wb-num { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--paper-2); font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+    .wb-row strong { display: block; font-size: 14px; }
+    .wb-row em { display: block; font-style: normal; font-size: 12px; color: var(--muted); }
+    .wb-state { font-size: 11px; color: var(--teal); font-weight: 700; }
+    .wb-foot { margin-top: 14px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; }
+    .wb-foot b { font-family: var(--serif); font-size: 20px; }
+    .wb-foot span { font-size: 12px; color: var(--muted); }
+
+    /* generic section */
+    section { padding: 76px 0; }
+    .section-head { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; align-items: end; margin-bottom: 38px; }
+    .kicker { font-size: 11px; letter-spacing: .16em; color: var(--amber); font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
+    h2 { margin: 0; font-family: var(--serif); font-size: clamp(30px, 4.2vw, 48px); line-height: 1.14; letter-spacing: -0.015em; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 15px; max-width: 560px; }
+    .rule { height: 1px; background: var(--line); margin: 0 0 42px; }
+
+    /* packages */
+    .package-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .package {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 22px 20px 20px; display: flex; flex-direction: column; min-height: 380px;
+      position: relative; transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .package:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .package.featured { background: var(--teal); color: var(--white); border-color: var(--teal); }
+    .package.featured .muted, .package.featured .pack-list li { color: rgba(255,255,255,.78); }
+    .pack-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .pack-label { font-size: 12px; font-weight: 700; letter-spacing: .05em; }
+    .pack-tag { font-size: 10px; padding: 4px 8px; border-radius: 999px; background: var(--paper-2); color: var(--ink-soft); font-weight: 700; }
+    .featured .pack-tag { background: rgba(255,255,255,.14); color: var(--white); }
+    .price { font-family: var(--serif); font-size: 40px; line-height: 1; margin: 6px 0 4px; }
+    .price small { font-family: var(--sans); font-size: 12px; color: var(--muted); font-weight: 500; }
+    .featured .price small { color: rgba(255,255,255,.72); }
+    .pack-desc { font-size: 13px; color: var(--muted); min-height: 42px; margin: 8px 0 16px; }
+    .featured .pack-desc { color: rgba(255,255,255,.72); }
+    .pack-list { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 9px; font-size: 13px; color: var(--ink-soft); }
+    .pack-list li { display: flex; gap: 8px; }
+    .pack-list li::before { content: "✓"; color: var(--teal); font-weight: 800; }
+    .featured .pack-list li::before { color: #9fe3d2; }
+    .pack-cta { margin-top: auto; font-size: 13px; font-weight: 700; color: var(--teal); display: inline-flex; align-items: center; gap: 6px; }
+    .featured .pack-cta { color: var(--white); }
+    .pack-cta::after { content: "→"; transition: transform .15s ease; }
+    .pack-cta:hover::after { transform: translateX(3px); }
+    .packages-note { margin-top: 16px; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .existing-note {
+      margin-top: 10px; padding-top: 12px; border-top: 1px dashed var(--line);
+      font-size: 12px; color: var(--teal-deep); font-weight: 600;
+    }
+    .existing-note a { text-decoration: underline; text-underline-offset: 3px; }
+    .api-foot a { color: #9fe3d2; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* workbook */
+    .workbook-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .work-card {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 22px 20px 20px; display: flex; flex-direction: column; min-height: 300px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .work-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .workbook-note { margin-top: 16px; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .coverage-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .coverage-chips span {
+      font-size: 11px; padding: 5px 9px; border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px; color: rgba(255,255,255,.7);
+    }
+
+    /* process */
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .step { border-top: 2px solid var(--ink); padding-top: 16px; }
+    .step-num { font-family: var(--mono); font-size: 12px; color: var(--amber); font-weight: 700; }
+    .step h3 { margin: 10px 0 6px; font-size: 16px; }
+    .step p { margin: 0; font-size: 13px; color: var(--muted); }
+
+    /* api */
+    .api-section { background: var(--ink); color: var(--white); padding: 80px 0; }
+    .api-section .kicker { color: #e3b47a; }
+    .api-section .section-head p { color: rgba(255,255,255,.62); }
+    .api-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 34px; align-items: start; }
+    .code-card { background: #0e1714; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; }
+    .code-head { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.1); font-size: 11px; color: rgba(255,255,255,.55); font-family: var(--mono); }
+    .code-head i { width: 8px; height: 8px; border-radius: 50%; background: #e07a5f; display: inline-block; }
+    .code-head i:nth-child(2) { background: #e3b47a; }
+    .code-head i:nth-child(3) { background: #7fb69f; }
+    pre { margin: 0; padding: 18px 16px 20px; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; color: #d9e6df; }
+    .c-key { color: #9fe3d2; } .c-str { color: #e3b47a; } .c-cm { color: #7e8f87; }
+    .endpoint-list { display: grid; gap: 8px; margin-top: 18px; }
+    .endpoint { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: rgba(255,255,255,.72); border-bottom: 1px solid rgba(255,255,255,.08); padding: 7px 0; }
+    .method { font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 5px; background: rgba(159,227,210,.14); color: #9fe3d2; }
+    .api-side h3 { font-family: var(--serif); font-size: 26px; margin: 0 0 12px; }
+    .api-side p { color: rgba(255,255,255,.64); font-size: 14px; margin: 0 0 20px; }
+    .api-price { display: grid; gap: 10px; }
+    .api-price-row { display: flex; justify-content: space-between; gap: 14px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.1); font-size: 13px; }
+    .api-price-row b { font-family: var(--serif); font-size: 17px; font-weight: 600; }
+    .api-price-row span { color: rgba(255,255,255,.58); }
+    .api-foot { margin-top: 18px; font-size: 11px; color: rgba(255,255,255,.42); }
+
+    /* stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .stat { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+    .stat b { display: block; font-family: var(--serif); font-size: 30px; line-height: 1.1; margin-bottom: 6px; }
+    .stat span { font-size: 12px; color: var(--muted); }
+
+    /* faq */
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+    details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+    summary { cursor: pointer; font-weight: 650; font-size: 14px; list-style: none; display: flex; justify-content: space-between; gap: 18px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--teal); font-weight: 700; }
+    details[open] summary::after { content: "−"; }
+    details p { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+
+    /* contact */
+    .contact {
+      background: linear-gradient(135deg, var(--teal-deep), var(--teal));
+      color: var(--white); border-radius: 24px; padding: 46px 42px;
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; align-items: center;
+      box-shadow: var(--shadow);
+    }
+    .contact h2 { font-size: clamp(28px, 3.8vw, 42px); margin-bottom: 12px; }
+    .contact p { color: rgba(255,255,255,.72); margin: 0; font-size: 14px; }
+    .contact-card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+    .contact-card img {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+    .contact-card .qr-copy span {
+      display: block;
+      color: rgba(255,255,255,.58);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .contact-card .qr-copy strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .contact-card .qr-copy p {
+      color: rgba(255,255,255,.66);
+      font-size: 12px;
+      margin: 6px 0 0;
+      line-height: 1.6;
+    }
+
+    footer { padding: 34px 0 46px; color: var(--muted); font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 20px; }
+    .footer-row a { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* responsive */
+    @media (max-width: 1200px) and (min-width: 961px) {
+      h1 { font-size: 60px; }
+    }
+    @media (max-width: 1100px) and (min-width: 961px) {
+      .hero-grid, .api-grid, .contact, .section-head { grid-template-columns: 1fr; }
+      .workbench { transform: none; max-width: 620px; }
+    }
+    @media (max-width: 960px) {
+      .hero-grid, .api-grid, .contact, .section-head { grid-template-columns: 1fr; }
+      .package-grid { grid-template-columns: repeat(2, 1fr); }
+      .workbook-grid { grid-template-columns: 1fr; }
+      .process-grid, .stats { grid-template-columns: repeat(2, 1fr); }
+      .workbench { transform: none; max-width: 620px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      .hero { padding-top: 54px; }
+      .package-grid, .process-grid, .stats, .faq-grid, .tracks { grid-template-columns: 1fr; }
+      .contact { padding: 30px 22px; }
+      .packages-note, .workbook-note { display: block; }
+      .packages-note span, .workbook-note span { display: block; margin-top: 6px; }
+      .hero-note { gap: 10px; }
+    }
+    @media print {
+      header, .hero-actions, .pack-cta, .contact { display: none; }
+      body { background: #fff; }
+      section { padding: 24px 0; }
+      .package, .stat, .workbench { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark">智</span>
+        <span>智学工坊<small>ZHIXUE STUDIO</small></span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#video">课程视频</a>
+        <a href="#workbook">教辅转 Word</a>
+        <a href="#packages">套餐</a>
+        <a href="#api">试题加工</a>
+        <a href="#faq">常见问题</a>
+      </nav>
+      <a class="nav-cta" href="#contact">获取报价 <span>↗</span></a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">教学内容工程 · 课程视频 · 教辅数字化 · 试题加工整理</div>
+          <h1>把课程和教辅，<br /><span class="accent">变成可复用的内容资产</span>。</h1>
+          <p class="lede">
+            一节 45 分钟的课、一本扫描版教辅、一套试题，都可以变成文字稿、字幕、切片、可编辑 Word、投屏 PPT 和结构化数据。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#packages">看服务套餐 <span>→</span></a>
+            <a class="btn btn-ghost" href="#api">了解试题加工</a>
+          </div>
+          <div class="tracks" aria-label="三条产品线">
+            <a href="#video">01 课程视频加工 <span>转写 · 字幕 · 切片 · 题目</span></a>
+            <a href="#workbook">02 教辅数字化 <span>扫描件 → Word · 投屏 PPT</span></a>
+            <a href="#api">03 试题加工 <span>录入 · 结构化 · 清洗 · API</span></a>
+          </div>
+          <div class="hero-note">
+            <span><i class="dot"></i> 2–3 个工作日交付</span>
+            <span><i class="dot"></i> 1 轮修改包含在内</span>
+            <span><i class="dot"></i> 支持批量课时</span>
+          </div>
+        </div>
+        <div class="workbench" aria-label="课程加工流程示意">
+          <div class="wb-head">
+            <span class="wb-title">COURSE → ASSETS</span>
+            <span class="wb-badge">45 MIN</span>
+          </div>
+          <div class="wb-row">
+            <span class="wb-num">01</span>
+            <span><strong>转写与校对</strong><em>文字稿 · 专有名词 · 时间轴</em></span>
+            <span class="wb-state">DONE</span>
+          </div>
+          <div class="wb-row">
+            <span class="wb-num">02</span>
+            <span><strong>字幕与切片</strong><em>SRT / VTT · 5 条短视频 · 封面</em></span>
+            <span class="wb-state">DONE</span>
+          </div>
+          <div class="wb-row">
+            <span class="wb-num">03</span>
+            <span><strong>知识点与题目</strong><em>20 道题 · 答案 · 解析</em></span>
+            <span class="wb-state">DONE</span>
+          </div>
+          <div class="wb-row">
+            <span class="wb-num">04</span>
+            <span><strong>结构化交付</strong><em>Excel / JSON / LMS 包</em></span>
+            <span class="wb-state">READY</span>
+          </div>
+          <div class="wb-foot">
+            <b>一套课，四种资产</b>
+            <span>可直接上线</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">01 / 课程视频加工</div>
+            <h2>不是剪辑，是内容工程。</h2>
+          </div>
+          <p>
+            按课时计价，先把 3–5 分钟样片做给你看。确认口音、术语、字幕风格和切片口味，再批量处理，避免整批返工。
+          </p>
+        </div>
+        <div class="rule"></div>
+        <div class="package-grid" id="packages">
+          <article class="package">
+            <div class="pack-top"><span class="pack-label">基础转写</span><span class="pack-tag">轻量</span></div>
+            <div class="price">¥99<small> / 课时</small></div>
+            <p class="pack-desc">只要文字稿和字幕，适合已有剪辑流程的团队。</p>
+            <ul class="pack-list">
+              <li>文字稿 DOCX</li>
+              <li>SRT 字幕</li>
+              <li>1 轮修改</li>
+              <li>术语表校对</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+
+          <article class="package featured">
+            <div class="pack-top"><span class="pack-label">字幕切片</span><span class="pack-tag">最受欢迎</span></div>
+            <div class="price">¥299<small> / 课时</small></div>
+            <p class="pack-desc">把长课拆成可发布的短视频，适合社媒和课程预热。</p>
+            <ul class="pack-list">
+              <li>转写 + SRT 字幕</li>
+              <li>5 条短视频切片</li>
+              <li>5 张封面</li>
+              <li>1 轮修改</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+
+          <article class="package">
+            <div class="pack-top"><span class="pack-label">题库生成</span><span class="pack-tag">教学</span></div>
+            <div class="price">¥499<small> / 课时</small></div>
+            <p class="pack-desc">从课程内容直接生成可用的练习题和解析。</p>
+            <ul class="pack-list">
+              <li>转写 + 知识点标注</li>
+              <li>20 道题（含答案/解析）</li>
+              <li>Excel / JSON</li>
+              <li>1 轮修改</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+
+          <article class="package">
+            <div class="pack-top"><span class="pack-label">全流程</span><span class="pack-tag">一步到位</span></div>
+            <div class="price">¥899<small> / 课时</small></div>
+            <p class="pack-desc">从原始视频到可上线的课程包，一次交付。</p>
+            <ul class="pack-list">
+              <li>转写 + 字幕 + 5 条切片</li>
+              <li>20 道题 + 课程元数据</li>
+              <li>LMS 可导入包</li>
+              <li>1 轮修改</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+        </div>
+        <div class="packages-note">
+          <span>加急 24 小时 +50% · 额外修改 ¥50/轮 · 10 课时 9 折 · 30 课时 8.5 折</span>
+          <span>价格按 ≤45 分钟/课时；超时按 1.5 课时计。</span>
+        </div>
+        <div class="existing-note">已在 UUMit 上架：<a href="https://m.uumit.com/skills/6d7213ee-48c7-4dd1-8f75-c69968fc99db" target="_blank" rel="noopener">课程视频加工 · 1,200 UT 起 / 课时</a></div>
+      </div>
+    </section>
+
+    <section id="workbook">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">02 / 教辅数字化</div>
+            <h2>扫描件，变成可编辑的 Word 和投屏 PPT。</h2>
+          </div>
+          <p>
+            针对图片版/扫描版中文教辅：保留插图、表格、填空，按章/节排版，每题标原书页码，每节末附答案；同时生成 16:9 投屏 PPT。
+          </p>
+        </div>
+        <div class="rule"></div>
+        <div class="workbook-grid">
+          <article class="work-card">
+            <div class="pack-top"><span class="pack-label">单节</span><span class="pack-tag">≤10 页</span></div>
+            <div class="price">¥99<small> / 节</small></div>
+            <p class="pack-desc">适合先做样张，或单节备课资料。</p>
+            <ul class="pack-list">
+              <li>可编辑 Word</li>
+              <li>16:9 投屏 PPT</li>
+              <li>答案页</li>
+              <li>1 轮修改</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+
+          <article class="work-card">
+            <div class="pack-top"><span class="pack-label">单章</span><span class="pack-tag">≤30 页</span></div>
+            <div class="price">¥299<small> / 章</small></div>
+            <p class="pack-desc">适合教研组、机构做单元资料。</p>
+            <ul class="pack-list">
+              <li>Word + 投屏 PPT</li>
+              <li>答案页 + 知识网络</li>
+              <li>目录/页码校对</li>
+              <li>1 轮修改</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+
+          <article class="work-card">
+            <div class="pack-top"><span class="pack-label">整册</span><span class="pack-tag">≤100 页</span></div>
+            <div class="price">¥699<small> / 册</small></div>
+            <p class="pack-desc">适合教辅数字化、整册上线。</p>
+            <ul class="pack-list">
+              <li>整册 Word + PPT</li>
+              <li>答案页 + 知识网络</li>
+              <li>整册目录/页码校对</li>
+              <li>批量折扣</li>
+            </ul>
+            <a class="pack-cta" href="#contact">咨询这个套餐</a>
+          </article>
+        </div>
+        <div class="workbook-note">
+          <span>交付：Word + PPT + 答案页 + 知识网络 · 输入：PDF / MinerU markdown + 答案文件 + page_offset</span>
+          <span>加急 48 小时 +30% · 手写/低清/复杂双栏 +50% 或另议</span>
+        </div>
+        <div class="existing-note">已在 UUMit 上架：<a href="https://m.uumit.com/skills/e4b76eba-5448-43ad-a29c-c24942c145dd" target="_blank" rel="noopener">600 UT / 单节 · 1800 UT / 单章 · 4500 UT / 整册</a></div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">03 / 交付流程</div>
+            <h2>先看样片，再批量。</h2>
+          </div>
+          <p>把不确定性放在最前面：课程先做 3–5 分钟样片，教辅先做 1 节样张，确认转写、字幕、切片、排版和题目风格，再进入整批生产。</p>
+        </div>
+        <div class="rule"></div>
+        <div class="process-grid">
+          <div class="step"><div class="step-num">01</div><h3>提交素材</h3><p>视频/音频、PPT、术语表、风格要求和截止时间。</p></div>
+          <div class="step"><div class="step-num">02</div><h3>样片 / 样张</h3><p>课程 3–5 分钟样片；教辅 1 节样张，确认风格。</p></div>
+          <div class="step"><div class="step-num">03</div><h3>确认样片</h3><p>确认后锁定标准，开始批量处理。</p></div>
+          <div class="step"><div class="step-num">04</div><h3>批量交付</h3><p>按课时打包，提供网盘或平台交付链接。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="api-section" id="api">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">04 / 试题加工与题库整理</div>
+            <h2>试题加工，交付成 Excel / JSON / API。</h2>
+          </div>
+          <p>客户提供 PDF、扫描件、Word、Excel 或图片，我们做录入、结构化、去重和格式统一；版权归客户，我们只做加工服务。</p>
+          <div class="coverage-chips">
+            <span>中考 / 学考</span><span>统考 / 模拟</span><span>期末 / 单元</span><span>Excel / JSON</span><span>可选 API</span>
+          </div>
+        </div>
+        <div class="api-grid">
+          <div>
+            <div class="code-card">
+              <div class="code-head"><i></i><i></i><i></i> GET /v1/questions</div>
+<pre><span class="c-cm"># 加工后的 API 检索示例（可选交付）</span>
+curl <span class="c-str">"https://api.zhixue.example/v1/questions"</span> \
+  -H <span class="c-str">"Authorization: Bearer $ZHIXUE_API_KEY"</span> \
+  -G \
+  --data-urlencode <span class="c-str">"subject=math"</span> \
+  --data-urlencode <span class="c-str">"grade=9"</span> \
+  --data-urlencode <span class="c-str">"exam_type=zhongkao"</span> \
+  --data-urlencode <span class="c-str">"year=2024"</span> \
+  --data-urlencode <span class="c-str">"district=示例区"</span> \
+  --data-urlencode <span class="c-str">"chapter=二次函数"</span> \
+  --data-urlencode <span class="c-str">"limit=20"</span>
+
+<span class="c-cm"># 响应</span>
+{
+  <span class="c-key">"items"</span>: [
+    {
+      <span class="c-key">"id"</span>: <span class="c-str">"q_math_9_00123"</span>,
+      <span class="c-key">"stem"</span>: <span class="c-str">"已知二次函数 y=x²-2x+3，其顶点坐标是？"</span>,
+      <span class="c-key">"exam_type"</span>: <span class="c-str">"zhongkao"</span>,
+      <span class="c-key">"year"</span>: 2024,
+      <span class="c-key">"answer"</span>: <span class="c-str">"A"</span>
+    }
+  ],
+  <span class="c-key">"request_id"</span>: <span class="c-str">"req_01HXYZ"</span>
+}</pre>
+            </div>
+            <div class="endpoint-list">
+              <div class="endpoint"><span class="method">GET</span> /v1/questions</div>
+              <div class="endpoint"><span class="method">GET</span> /v1/questions/{id}</div>
+              <div class="endpoint"><span class="method">POST</span> /v1/questions/batch</div>
+              <div class="endpoint"><span class="method">GET</span> /v1/exams</div>
+              <div class="endpoint"><span class="method">GET</span> /v1/exams/{id}</div>
+              <div class="endpoint"><span class="method">POST</span> /v1/papers/generate</div>
+            </div>
+          </div>
+          <div class="api-side">
+            <h3>按题量计价，数据归客户。</h3>
+            <p>先做 20 题样张免费评估；确认字段和格式后批量。需要在线调用时，按 openapi.yaml 封装到客户自己的域名或服务器。</p>
+            <div class="api-price">
+              <div class="api-price-row"><span>基础录入</span><b>¥1 <small>/ 题</small></b></div>
+              <div class="api-price-row"><span>结构化加工</span><b>¥3 <small>/ 题</small></b></div>
+              <div class="api-price-row"><span>清洗整理</span><b>¥5 <small>/ 题</small></b></div>
+              <div class="api-price-row"><span>API 封装</span><b>¥3,000 <small>起</small></b></div>
+            </div>
+            <div class="api-foot">100 题起 · 加急 +30% · 100 题约 2–3 个工作日 · API 部署在客户环境 · 维护 ¥500/月起</div>
+            <div class="api-foot"><a href="https://m.uumit.com/skills/878f5eea-6c00-41f9-954b-1b4c6afea820" target="_blank" rel="noopener">已在 UUMit 上架：试题加工 · 2,000 UT 起 / 100 题 →</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">05 / 为什么是我们</div>
+            <h2>内容、技术、交付，在同一条线上。</h2>
+          </div>
+          <p>不是把活转包出去。课程理解、视频处理、教辅排版、题库结构和 API 工程由同一套流程完成，减少来回沟通和格式返工。</p>
+        </div>
+        <div class="rule"></div>
+        <div class="stats">
+          <div class="stat"><b>45 min</b><span>标准课时 · 超时按 1.5 课时</span></div>
+          <div class="stat"><b>2–3 days</b><span>标准交付周期 · 可加急</span></div>
+          <div class="stat"><b>3 lines</b><span>课程 / 教辅 / 试题加工</span></div>
+          <div class="stat"><b>1 round</b><span>修改包含在套餐内</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="kicker">06 / 常见问题</div>
+            <h2>先把边界说清楚。</h2>
+          </div>
+          <p>版权、准确率、周期、数据安全——这些都会影响交付，提前确认比事后返工便宜。</p>
+        </div>
+        <div class="rule"></div>
+        <div class="faq-grid">
+          <details>
+            <summary>素材需要我自己拥有版权吗？</summary>
+            <p>需要。客户需确认对课程视频、讲义、教辅和试题拥有版权或合法授权。不接盗版课程、盗版教辅、破解、去 DRM、爬取受限数据。</p>
+          </details>
+          <details>
+            <summary>转写准确率能到多少？</summary>
+            <p>采用 AI 转写 + 人工校对，普通普通话课程通常在 95%–98%；口音、专业术语和多人对话会影响准确率。提供术语表可以明显提升。</p>
+          </details>
+          <details>
+            <summary>可以先做一小段看看吗？</summary>
+            <p>可以。标准流程就是先做 3–5 分钟样片，确认转写、字幕、切片和题目风格，再批量处理。</p>
+          </details>
+          <details>
+            <summary>可以先做样张吗？</summary>
+            <p>可以。先做 20 题样张免费评估，确认字段、格式和清洗口径，再批量加工。</p>
+          </details>
+          <details>
+            <summary>可以部署到我们自己的服务器吗？</summary>
+            <p>可以。API 封装默认部署在客户自己的域名或服务器，数据不经过我方；也可以只交付 Excel/JSON，不部署 API。</p>
+          </details>
+          <details>
+            <summary>试题版权谁负责？</summary>
+            <p>客户提供试题源文件，并保证拥有数字化、加工和使用的权利；我们只做加工整理，不销售题目内容，加工成果归客户。</p>
+          </details>
+          <details>
+            <summary>教辅扫描件需要提供什么？</summary>
+            <p>PDF 或 MinerU markdown、答案文件、目录页码和 page_offset；手写、低清、复杂双栏会另议。先做 1 节样张确认版式。</p>
+          </details>
+          <details>
+            <summary>你们不接什么？</summary>
+            <p>不接盗版/破解内容、考试作弊、代写作业、伪造材料、爬取受限数据，以及无法确认授权的课程视频、教辅或试题。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact">
+          <div>
+            <h2>扫码关注「智教云栈」，<br />发我样课或样张。</h2>
+            <p>在公众号回复「课程视频」或「教辅 / 题库」，告诉我课程类型、页数、题量和截止时间，我给你固定报价和排期。</p>
+          </div>
+          <div class="contact-card contact-card--qr">
+            <img src="/assets/zhixue-studio/zhijiao-yunzhan-qr.png" alt="智教云栈 公众号二维码" />
+            <div class="qr-copy">
+              <span>公众号</span>
+              <strong>智教云栈</strong>
+              <p>扫码关注，回复「课程视频」或「教辅 / 题库」获取报价。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>© 2026 智学工坊 · 课程视频 · 教辅数字化 · 试题加工整理</span>
+      <span>联系方式：公众号「智教云栈」 · 课程视频 · 教辅数字化 · 试题加工</span>
+    </div>
+  </footer>
+</body>
+</html>

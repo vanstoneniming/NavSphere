@@ -1821,6 +1821,30 @@
         }
       ],
       "subCategories": []
+    },
+    {
+      "id": "zhixue-service",
+      "title": "智教服务",
+      "icon": "Sparkles",
+      "description": "课程视频加工、教辅数字化、试题整理与题库 API",
+      "enabled": true,
+      "items": [
+        {
+          "id": "item-zhixue-studio",
+          "title": "课程视频 · 教辅 · 题库加工",
+          "href": "/zhixue-studio",
+          "description": "课程视频转写/字幕/切片、教辅扫描件转 Word/PPT、试题加工与题库 API。",
+          "longDescription": "## 简介\n**智教云栈 · 内容加工服务**面向教师、教培机构与课程创作者，把课程视频、教辅扫描件和试题整理成可编辑、可检索、可复用的内容资产。\n\n## 服务范围\n- 课程视频：转写、字幕、切片、知识点标注、题目生成\n- 教辅数字化：扫描件/图片版教辅转可编辑 Word、投屏 PPT\n- 试题加工：录入、结构化、清洗、Excel/JSON，可选题库 API\n\n## 咨询方式\n关注公众号「智教云栈」，回复「课程视频」或「教辅 / 题库」获取报价与排期。",
+          "tags": [
+            "课程视频",
+            "教辅数字化",
+            "题库"
+          ],
+          "useDefaultIcon": true,
+          "enabled": true
+        }
+      ],
+      "subCategories": []
     }
   ]
 }

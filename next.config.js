@@ -26,6 +26,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: '/zhixue-studio',
+        destination: '/zhixue-studio.html'
+      },
+      {
         source: '/api/auth/:path*',
         destination: '/api/auth/:path*'
       },
