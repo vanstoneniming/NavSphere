@@ -1,0 +1,8 @@
+name = "mail-bark-relay"
+main = "src/index.js"
+compatibility_date = "2026-11-22"
+
+# Cloudflare 的 *.workers.dev 在中国网络下经常连不上，使用自己的域名
+[[routes]]
+pattern = "mail-bark.zhijiaoyunzhan.com"
+custom_domain = true
